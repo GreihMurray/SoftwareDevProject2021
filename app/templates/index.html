@@ -24,6 +24,12 @@
 
 <br><br>
 
+{% if TestData%}
+<textarea rows='30' cols='150' name='TestOutput' id="TestOutput">{{TestData}}</textarea>
+{%endif%}
+
+<br><br>
+
 <button type="submit">Spell Check</button>
 
 </form>
@@ -33,23 +39,8 @@
           crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    $(document).on('submit','#TextForm',function(e)
-                   {
-      console.log('hello');
-      e.preventDefault();
-      $.ajax({
-        type:'POST',
-        url:'/',
-        data:{
-          TextToCheck:$("#TextToCheck").val()
-        },
-        success:function()
-        {
-          alert('saved');
-        }
-      })
-    });
-  </script>
+	
+</script>
 
 </body>
 
