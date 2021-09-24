@@ -16,7 +16,9 @@ def index():
         for idx in results:
             print(TextToCheck_List[idx])
 
-    return render_template("index.html", TestData=TextToCheck)
+        return render_template("index.html", TestData=results)
+
+    return render_template("index.html")
 
 @app.route('/about')
 def about():
