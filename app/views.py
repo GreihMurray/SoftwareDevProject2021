@@ -4,6 +4,8 @@ from .spell_check import *
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    TextToCheck = ''
+
     if request.method == "POST":
         TextToCheck = request.form.get("TextToCheck")
         TextToCheck_List = parse_txt(TextToCheck)
@@ -13,6 +15,8 @@ def index():
         print("Incorrectly Spelled Words")
         for idx in results:
             print(TextToCheck_List[idx])
+
+        return render_template("index.html", TestData=results)
 
     return render_template("index.html")
 
