@@ -13,10 +13,12 @@ def index():
         print("Input Text")
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
+        results_words = []
         for idx in results:
             print(TextToCheck_List[idx])
+            results_words.append(idx)
 
-        return render_template("index.html", TestData=results)
+        return render_template("index.html", misspelled_words = results_words)
 
     return render_template("index.html")
 
