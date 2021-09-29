@@ -18,8 +18,6 @@ def index():
             print(TextToCheck_List[idx])
             results_words.append(TextToCheck_List[idx])
 
-        print(results_words)
-
         return render_template("index.html", misspelled_words=results_words)
 
     return render_template("index.html")
