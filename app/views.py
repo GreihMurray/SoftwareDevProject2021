@@ -16,9 +16,11 @@ def index():
         results_words = []
         for idx in results:
             print(TextToCheck_List[idx])
-            results_words.append(idx)
+            results_words.append(TextToCheck_List[idx])
 
-        return render_template("index.html", misspelled_words = results_words)
+        print(results_words)
+
+        return render_template("index.html", misspelled_words=results_words)
 
     return render_template("index.html")
 
