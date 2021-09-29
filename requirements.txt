@@ -8,3 +8,5 @@ MarkupSafe==2.0.1
 typing-extensions==3.10.0.2
 Werkzeug==2.0.1
 zipp==3.5.0
+pytest==6.2.5
+pyspellchecker==0.6.2
