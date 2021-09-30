@@ -2,6 +2,14 @@
 
 <head>
 <title>Software Dev Project</title>
+
+    <style>
+        .Misspelled_words{
+            text-decoration: underline;
+            text-decoration-color: crimson;
+            text-decoration-style: wavy;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,7 +24,7 @@
 
 <br>
 <h4>How do I use it?</h4>
-<p>To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
+<p class="Misspelled_words">To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
 
 <form method='POST' id="TextForm">
 
@@ -24,9 +32,9 @@
 
 <br><br>
 
-{% if misspelled_words%}
-<textarea rows='30' cols='150' name='TestOutput' id="TestOutput">{{misspelled_words}}</textarea>
-{%endif%}
+{% for word in misspelled_words%}
+<textarea rows='30' cols='150' name='TestOutput' id="TestOutput" class={{word[1]}}>{{word[0]}}</textarea>
+{% endfor %}
 
 <br><br>
 
