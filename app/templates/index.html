@@ -24,7 +24,7 @@
 
 <br>
 <h4>How do I use it?</h4>
-<p class="Misspelled_words">To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
+<p>To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
 
 <form method='POST' id="TextForm">
 
@@ -32,9 +32,13 @@
 
 <br><br>
 
+<div contenteditable="true">
+
 {% for word in misspelled_words%}
-<textarea rows='30' cols='150' name='TestOutput' id="TestOutput" class={{word[1]}}>{{word[0]}}</textarea>
+    <span class={{word[1]}}>{{word[0]}}</span>
 {% endfor %}
+
+</div>
 
 <br><br>
 
