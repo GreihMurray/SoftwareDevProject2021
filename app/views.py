@@ -20,6 +20,8 @@ def index():
         for i in range (0, len(TextToCheck_List)):
             if i in results:
                 css_id = 'Misspelled_words'
+            else:
+                css_id = ''
             results_words.append((css_id, TextToCheck_List[i]))
 
 
