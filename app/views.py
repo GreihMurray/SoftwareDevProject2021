@@ -7,6 +7,7 @@ def index():
     TextToCheck = ''
 
     if request.method == "POST":
+        css_id = ''
         TextToCheck = request.form.get("TextToCheck")
         TextToCheck_List = parse_txt(TextToCheck)
         results = check_word(TextToCheck_List)
@@ -16,8 +17,11 @@ def index():
         results_words = []
         for idx in results:
             print(TextToCheck_List[idx])
-            css_id = 'Misspelled_words'
-            results_words.append((TextToCheck_List[idx], css_id))
+        for i in range (0, len(TextToCheck_List)):
+            if i in results:
+                css_id = 'Misspelled_words'
+            results_words.append((css_id, TextToCheck_List[i]))
+
 
         return render_template("index.html", misspelled_words=results_words)
 
