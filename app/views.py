@@ -4,10 +4,7 @@ from .spell_check import *
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    TextToCheck = ''
-
     if request.method == "POST":
-        css_id = ''
         TextToCheck = request.form.get("TextToCheck")
         TextToCheck_List = parse_txt(TextToCheck)
         results = check_word(TextToCheck_List)
@@ -19,11 +16,9 @@ def index():
             print(TextToCheck_List[idx])
         for i in range (0, len(TextToCheck_List)):
             if i in results:
-                css_id = 'Misspelled_words'
+                results_words.append(('Misspelled_words', TextToCheck_List[i]))
             else:
-                css_id = ''
-            results_words.append((css_id, TextToCheck_List[i]))
-
+                results_words.append(('', TextToCheck_List[i]))
 
         return render_template("index.html", misspelled_words=results_words)
 
