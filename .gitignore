@@ -1,1 +1,4 @@
 .idea/
+.env/
+app/templates/holdStuff.html
+app/templates/output.html

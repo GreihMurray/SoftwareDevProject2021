@@ -2,6 +2,14 @@
 
 <head>
 <title>Software Dev Project</title>
+
+    <style>
+        .Misspelled_words{
+            text-decoration: underline;
+            text-decoration-color: crimson;
+            text-decoration-style: wavy;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,6 +32,16 @@
 
 <br><br>
 
+<div contenteditable="true">
+
+{% for word in misspelled_words%}
+    <span class={{word[0]}}>{{word[1]}}</span>
+{% endfor %}
+
+</div>
+
+<br><br>
+
 <button type="submit">Spell Check</button>
 
 </form>
@@ -33,23 +51,8 @@
           crossorigin="anonymous"></script>
 
 <script type="text/javascript">
-    $(document).on('submit','#TextForm',function(e)
-                   {
-      console.log('hello');
-      e.preventDefault();
-      $.ajax({
-        type:'POST',
-        url:'/',
-        data:{
-          TextToCheck:$("#TextToCheck").val()
-        },
-        success:function()
-        {
-          alert('saved');
-        }
-      })
-    });
-  </script>
+	
+</script>
 
 </body>
 
