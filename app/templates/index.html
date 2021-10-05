@@ -58,6 +58,69 @@ HTML file that uses base template to create specific page for textbox editor
                 document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
             }
         }
+<<<<<<< HEAD
     </script>
+=======
+
+        .divStyle{
+            width: 80%;
+            height: 50%;
+            margin:0 auto;
+            outline: black;
+            outline-style: double;
+            outline-width: medium;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Spell Checker</h2>
+
+<hr>
+<br><br>
+
+<h4>What is this?</h4>
+<p>This is a spell checker which will allow you, the user, to input text in [LIST OF LANGUAGES], and recieve a quick, accurate, spell check so you can be sure all of your writing is free of errors.</p>
+
+<br>
+<h4>How do I use it?</h4>
+<p>To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
+
+<form method='POST' id="TextForm" onsubmit="return getContent()">
+
+<textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
+
+<div contenteditable="true" id="InputOutputDiv" class="divStyle" >
+
+
+{% for word in misspelled_words%}
+    <span class={{word[0]}}>{{word[1]}}</span>
+{% endfor %}
+
+</div>
+
+<br><br>
+
+<button type="submit">Spell Check</button>
+
+</form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	function getContent(){
+	    document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+    }
+</script>
+
+</body>
+
+<footer>
+</footer>
+>>>>>>> 059a422 (Starting rework of input/output)
 
 {% endblock %}
