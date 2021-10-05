@@ -26,6 +26,17 @@ Other pages inherit from this file for simplicity.
                 text-decoration-color: crimson;
                 text-decoration-style: wavy;
             }
+
+            .divStyle{
+                width: 80%;
+                height: 60vh;
+                margin:0 auto;
+                outline: black;
+                outline-style: double;
+                outline-width: medium;
+                outline-offset: 3px;
+                text-align: left;
+            }
         </style>
     </head>
 
@@ -44,7 +55,7 @@ Other pages inherit from this file for simplicity.
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('index_page') }}">Index</a>
+                        <a class="nav-link" href="{{ url_for('index_page') }}">Spell Checker</a>
                     </li>
                 </ul>
             </div>
