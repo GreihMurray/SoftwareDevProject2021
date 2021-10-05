@@ -94,9 +94,9 @@ HTML file that uses base template to create specific page for textbox editor
 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
 
 <!--Editable div that will allow for input/destination for output-->
+<!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
 <div contenteditable="true" id="InputOutputDiv" class="divStyle" >
 
-<!--Loops through all words and prints each in a span element with proper styling if misspelled-->
 {% for word in misspelled_words%}
     <span class={{word[0]}}>{{word[1]}}</span>
 {% endfor %}
@@ -128,8 +128,11 @@ HTML file that uses base template to create specific page for textbox editor
         */
 
         if(in_out_div.childNodes.length > 1){
+            console.log(in_out_div.childNodes.length)
+            console.log(in_out_div.childNodes)
             child_nodes = in_out_div.childNodes
             for(var i = 1; i < child_nodes.length; i += 2){
+                console.log(child_nodes[i])
                 in_out_textarea.value += child_nodes[i].innerHTML + ' '
             }
         }
