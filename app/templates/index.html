@@ -90,11 +90,13 @@ HTML file that uses base template to create specific page for textbox editor
 
 <form method='POST' id="TextForm" onsubmit="return getContent()">
 
+<!--Hidden textarea used to pass data from div to backend-->
 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
 
+<!--Editable div that will allow for input/destination for output-->
 <div contenteditable="true" id="InputOutputDiv" class="divStyle" >
 
-
+<!--Loops through all words and prints each in a span element with proper styling if misspelled-->
 {% for word in misspelled_words%}
     <span class={{word[0]}}>{{word[1]}}</span>
 {% endfor %}
@@ -112,8 +114,28 @@ HTML file that uses base template to create specific page for textbox editor
           crossorigin="anonymous"></script>
 
 <script type="text/javascript">
+    //Method that runs on form submission to get data from div and put into textarea to be sent to backend
 	function getContent(){
-	    document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+	    in_out_div = document.getElementById("InputOutputDiv")
+        in_out_textarea = document.getElementById("InputOutputTextArea")
+
+
+        /*Checks for child nodes in div
+            if child nodes are found, iterates through each one to get data
+            adds that data to inputoutput text area so it can be passed to backend properly
+
+            If no child nodes are found, adds contents of div to inputoutput text area
+        */
+
+        if(in_out_div.childNodes.length > 1){
+            child_nodes = in_out_div.childNodes
+            for(var i = 1; i < child_nodes.length; i += 2){
+                in_out_textarea.value += child_nodes[i].innerHTML + ' '
+            }
+        }
+        else{
+            document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+        }
     }
 </script>
 
