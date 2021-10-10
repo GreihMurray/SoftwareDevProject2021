@@ -19,3 +19,7 @@ def check_word(word_list):
             if not check[word]:
                 results.append(idx)
     return results
+
+
+def word_candidates(word):
+    return SpellChecker.candidates(word)
