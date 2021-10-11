@@ -1,62 +1,63 @@
-<html>
+<!--
+HTML file that uses base template to create specific page for textbox editor
+-->
 
-<head>
-<title>Software Dev Project</title>
+{% extends 'base.html' %}
 
-    <style>
-        .Misspelled_words{
-            text-decoration: underline;
-            text-decoration-color: crimson;
-            text-decoration-style: wavy;
+{% block title %}
+    Index Page
+{% endblock %}
+
+{% block content %}
+    <body class="text-center">
+        <br>
+        <div class="container">
+            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+                <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
+
+                    <!--Editable div that will allow for input/destination for output-->
+                    <!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
+                    <div contenteditable="true" id="InputOutputDiv" class="divStyle">
+
+                    {% for word in misspelled_words%}
+                        <span class={{word[0]}}>{{word[1]}}</span>
+                    {% endfor %}
+
+                    </div>
+                <br>
+                <button type="submit">Spell Check</button>
+            </form>
+        </div>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        //Method that runs on form submission to get data from div and put into textarea to be sent to backend
+        function getContent(){
+            in_out_div = document.getElementById("InputOutputDiv")
+            in_out_textarea = document.getElementById("InputOutputTextArea")
+
+
+            /*Checks for child nodes in div
+                if child nodes are found, iterates through each one to get data
+                adds that data to inputoutput text area so it can be passed to backend properly
+
+                If no child nodes are found, adds contents of div to inputoutput text area
+            */
+
+            if(in_out_div.childNodes.length > 1){
+                child_nodes = in_out_div.childNodes
+                for(var i = 1; i < child_nodes.length; i += 2){
+                    in_out_textarea.value += child_nodes[i].innerHTML + ' '
+                }
+            }
+            else{
+                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+            }
         }
-    </style>
-</head>
+    </script>
 
-<body>
-
-<h2>Spell Checker</h2>
-
-<hr>
-<br><br>
-
-<h4>What is this?</h4>
-<p>This is a spell checker which will allow you, the user, to input text in [LIST OF LANGUAGES], and recieve a quick, accurate, spell check so you can be sure all of your writing is free of errors.</p>
-
-<br>
-<h4>How do I use it?</h4>
-<p>To use this tool, simply type or paste the text you want to check into the textarea below and then press the spell check button</p>
-
-<form method='POST' id="TextForm">
-
-<textarea rows='30' cols='150' name='TextToCheck' id="TextToCheck"></textarea>
-
-<br><br>
-
-<div contenteditable="true">
-
-{% for word in misspelled_words%}
-    <span class={{word[0]}}>{{word[1]}}</span>
-{% endfor %}
-
-</div>
-
-<br><br>
-
-<button type="submit">Spell Check</button>
-
-</form>
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-          crossorigin="anonymous"></script>
-
-<script type="text/javascript">
-	
-</script>
-
-</body>
-
-<footer>
-</footer>
-
-<html>
+{% endblock %}
