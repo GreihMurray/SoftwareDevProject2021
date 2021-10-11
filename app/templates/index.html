@@ -128,11 +128,8 @@ HTML file that uses base template to create specific page for textbox editor
         */
 
         if(in_out_div.childNodes.length > 1){
-            console.log(in_out_div.childNodes.length)
-            console.log(in_out_div.childNodes)
             child_nodes = in_out_div.childNodes
             for(var i = 1; i < child_nodes.length; i += 2){
-                console.log(child_nodes[i])
                 in_out_textarea.value += child_nodes[i].innerHTML + ' '
             }
         }
