@@ -30,7 +30,11 @@ def index_page():
                 results_words.append(('Misspelled_words', TextToCheck_List[i]))
             else:
                 results_words.append(('', TextToCheck_List[i]))
+
         return render_template("index.html", misspelled_words=results_words)
+
     return render_template("index.html")
 
-
+@app.route('/about')
+def about():
+    return "About"

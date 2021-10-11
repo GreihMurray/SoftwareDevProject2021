@@ -1,7 +1,6 @@
 from spellchecker import SpellChecker
 import re
 
-
 def parse_txt(raw_input):
     init_word_list = re.split('([^a-zA-Z0-9\'])', raw_input)
     word_list = []
