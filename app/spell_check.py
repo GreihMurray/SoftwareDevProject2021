@@ -1,17 +1,12 @@
 from spellchecker import SpellChecker
 import re
 
-
 def parse_txt(raw_input):
     init_word_list = re.split('([^a-zA-Z0-9\'])', raw_input)
     word_list = []
     for word in init_word_list:
         if word != ' ' and word:
             word_list.append(word)
-
-
-def parse_txt(raw_input):
-    word_list = raw_input.split()
     return word_list
 
 
@@ -22,6 +17,4 @@ def check_word(word_list):
         if not re.match('([^a-zA-Z0-9])', word):
             if not check[word]:
                 results.append(idx)
-        if not check[word]:
-            results.append(idx)
     return results
