@@ -29,6 +29,8 @@ def index_page():
             word = TextToCheck_List[idx]
             recommendations.append((word, word_candidates(word)))
             print(recommendations)
+        for idx in results:
+            print(TextToCheck_List[idx])
         for i in range (0, len(TextToCheck_List)):
             if i in results:
                 results_words.append(('Misspelled_words', TextToCheck_List[i]))

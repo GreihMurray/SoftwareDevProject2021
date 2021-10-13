@@ -20,7 +20,6 @@ def check_word(word_list):
 
     return results
 
-
 def word_candidates(word_to_check):
     check = SpellChecker()
     return check.candidates(word_to_check)
