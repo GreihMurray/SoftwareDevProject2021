@@ -2,3 +2,4 @@
 .env/
 app/templates/holdStuff.html
 app/templates/output.html
+__pycache__/
