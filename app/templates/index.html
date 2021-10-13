@@ -1,0 +1,137 @@
+<!--
+HTML file that uses base template to create specific page for textbox editor
+-->
+
+{% extends 'base.html' %}
+
+{% block title %}
+    Index Page
+{% endblock %}
+
+{% block content %}
+    <body class="text-center">
+        <br>
+        <!-- Drop down menu button -->
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Language Selection</button>
+            <div id="myDropdown" class="dropdown-content">
+                <!-- Right now, I have this directing back to the index page, but we can develop
+                    other branch pages for the text box -->
+                <a href="{{ url_for('index_page') }}">English</a>
+                <a href="{{ url_for('index_page') }}">Spanish</a>
+                <a href="{{ url_for('index_page') }}">Italian</a>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="container">
+            <p style="text-align: right">Recommendations</p>
+            <br>
+        <div class="container">
+            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+                <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
+
+                    <!--Editable div that will allow for input/destination for output-->
+                    <!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
+                    <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
+
+                    {% for word in misspelled_words%}
+                        <span class={{word[0]}}>{{word[1]}}</span>
+                    {% endfor %}
+
+                    </div>
+
+                    <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
+
+                    {% for entry, recs in recommendations%}
+                        <span>Misspelled Word: {{entry}}</span>
+                        <br>
+                        {%for rec in recs%}
+                            <span>{{rec}}</span><br>
+                        {%endfor%}
+                        <br><br>
+                    {% endfor %}
+
+                    </div>
+                <br>
+                <button type="submit">Spell Check</button>
+            </form>
+        </div>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        //Method that runs on form submission to get data from div and put into textarea to be sent to backend
+        function getContent(){
+            in_out_div = document.getElementById("InputOutputDiv")
+            in_out_textarea = document.getElementById("InputOutputTextArea")
+
+
+            /*Checks for child nodes in div
+                if child nodes are found, iterates through each one to get data
+                adds that data to inputoutput text area so it can be passed to backend properly
+
+                If no child nodes are found, adds contents of div to inputoutput text area
+            */
+
+            if(in_out_div.childNodes.length > 1){
+                child_nodes = in_out_div.childNodes
+                for(var i = 1; i < child_nodes.length; i += 2){
+                    in_out_textarea.value += child_nodes[i].innerHTML + ' '
+                }
+            }
+            else{
+                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+            }
+        }
+    </script>
+
+    <style>
+        /* Dropdown Button */
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {display: block;}
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    </style>
+
+{% endblock %}
