@@ -25,16 +25,32 @@ HTML file that uses base template to create specific page for textbox editor
 
         <br><br>
 
+
         <div class="container">
+            <p style="text-align: right">Recommendations</p>
+            <br>
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
 
                     <!--Editable div that will allow for input/destination for output-->
                     <!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
-                    <div contenteditable="true" id="InputOutputDiv" class="divStyle">
+                    <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
 
                     {% for word in misspelled_words%}
                         <span class={{word[0]}}>{{word[1]}}</span>
+                    {% endfor %}
+
+                    </div>
+
+                    <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
+
+                    {% for entry, recs in recommendations%}
+                        <span>Misspelled Word: {{entry}}</span>
+                        <br>
+                        {%for rec in recs%}
+                            <span>{{rec}}</span><br>
+                        {%endfor%}
+                        <br><br>
                     {% endfor %}
 
                     </div>
