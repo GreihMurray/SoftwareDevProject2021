@@ -23,6 +23,12 @@ def index_page():
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
         results_words = []
+        recommendations = []
+        for idx in results:
+            print(TextToCheck_List[idx])
+            word = TextToCheck_List[idx]
+            recommendations.append((word, word_candidates(word)))
+            print(recommendations)
         for idx in results:
             print(TextToCheck_List[idx])
         for i in range (0, len(TextToCheck_List)):
@@ -31,7 +37,7 @@ def index_page():
             else:
                 results_words.append(('', TextToCheck_List[i]))
 
-        return render_template("index.html", misspelled_words=results_words)
+        return render_template("index.html", misspelled_words=results_words, recommendations=recommendations)
 
     return render_template("index.html")
 
