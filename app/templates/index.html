@@ -18,6 +18,7 @@ HTML file that uses base template to create specific page for textbox editor
                 <!-- Right now, I have this directing back to the index page, but we can develop
                     other branch pages for the text box -->
                 <a href="{{ url_for('index_page') }}">English</a>
+                <a href="{{ url_for('index_page') }}">Irish</a>
                 <a href="{{ url_for('index_page') }}">Spanish</a>
                 <a href="{{ url_for('index_page') }}">Italian</a>
             </div>
@@ -25,32 +26,32 @@ HTML file that uses base template to create specific page for textbox editor
 
         <br><br>
 
-        <div class="container">
-            <p style="text-align: right">Recommendations</p>
-            <br>
+<!--        <div class="container">-->
+<!--            <p style="text-align: right">Recommendations</p>-->
+<!--            <br>-->
         <div class="container">
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
-<<<<<<< Updated upstream
-<!--Editable div that will allow for input/destination for output-->
+                <div class="container">
+                    <p style="float:left">Enter your words or sentences here:</p>
+                    <p style="float:right; width: 52.5%">Incorrect spellings with suggestions:</p>
+                </div>
+
+                <!--Editable div that will allow for input/destination for output-->
                 <!--Included for loop iterates through every word in input, prints in individual span element,
                     and styles appropriately-->
-                <p style="text-align:left;">Enter your words or sentences here:
-                    <span style="float:right;">Incorrect spellings with suggestions:</span>
-                </p>
+
 <!--                <div class="row">-->
 <!--                    <div contenteditable="true" id="InputOutputDiv" class="divStyle col">-->
 <!--                        {% for word in misspelled_words%}-->
 <!--                            <span class={{word[0]}}>{{word[1]}}</span>-->
 <!--                        {% endfor %}-->
 <!--                    </div>-->
-                    <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
-
+                <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
                     {% for word in misspelled_words%}
                         <span class={{word[0]}}>{{word[1]}}</span>
                     {% endfor %}
-
-                    </div>
+                </div>
 <!--<div contenteditable="true" id="InputOutputDiv2" class="divStyle col">-->
 <!--                        {% for word in misspelled_words%}-->
 <!--                            {% if word[0] == "Misspelled_words"%}-->
@@ -59,8 +60,7 @@ HTML file that uses base template to create specific page for textbox editor
 <!--                            {% endif %}-->
 <!--                        {% endfor %}-->
 <!--                    </div>-->
-                    <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
-
+                <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
                     {% for entry, recs in recommendations%}
                         <span>Misspelled Word: {{entry}}</span>
                         <br>
@@ -69,8 +69,7 @@ HTML file that uses base template to create specific page for textbox editor
                         {%endfor%}
                         <br><br>
                     {% endfor %}
-
-                    </div>
+                </div>
 <!--                      </div>-->
 
                 <br>
