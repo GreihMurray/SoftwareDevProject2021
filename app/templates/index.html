@@ -20,20 +20,8 @@ HTML file that uses base template to create specific page for textbox editor
                 <button onclick="lang_select('English')" class="btn btn-light btn-style-custom">English</button>
                 <br>
                 <button onclick="lang_select('Irish')" class="btn btn-light btn-style-custom">Irish</button>
-    <body class="text-center">
-        <br>
-        <!-- Drop down menu button -->
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Language Selection</button>
-            <div id="myDropdown" class="dropdown-content">
-                <!-- Right now, I have this directing back to the index page, but we can develop
-                    other branch pages for the text box -->
-                <a href="{{ url_for('index_page') }}">English</a>
-                <a href="{{ url_for('index_page') }}">Spanish</a>
-                <a href="{{ url_for('index_page') }}">Italian</a>
             </div>
         </div>
-
         <br><br>
 
         <div class="container">
@@ -69,35 +57,6 @@ HTML file that uses base template to create specific page for textbox editor
                     <button type="submit">Spell Check</button>
                 </form>
             </div>
-        <div class="container">
-            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
-                <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
-
-                    <!--Editable div that will allow for input/destination for output-->
-                    <!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
-                    <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
-
-                    {% for word in misspelled_words%}
-                        <span class={{word[0]}}>{{word[1]}}</span>
-                    {% endfor %}
-
-                    </div>
-
-                    <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
-
-                    {% for entry, recs in recommendations%}
-                        <span>Misspelled Word: {{entry}}</span>
-                        <br>
-                        {%for rec in recs%}
-                            <span>{{rec}}</span><br>
-                        {%endfor%}
-                        <br><br>
-                    {% endfor %}
-
-                    </div>
-                <br>
-                <button type="submit">Spell Check</button>
-            </form>
         </div>
     </body>
 
@@ -106,6 +65,11 @@ HTML file that uses base template to create specific page for textbox editor
                 crossorigin="anonymous"></script>
 
     <script type="text/javascript">
+        //Prevents resubmission of form when page is refreshed
+        if (window.history.replaceState) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+
         //Method that runs on form submission to get data from div and put into textarea to be sent to backend
         function getContent(){
             in_out_div = document.getElementById("InputOutputDiv")
