@@ -9,7 +9,7 @@ HTML file that uses base template to create specific page for textbox editor
 {% endblock %}
 
 {% block content %}
-    <body class="text-center">
+    <body class="text-center" onload="setLanguage()">
         <br>
         <!-- Drop down menu button -->
         <div class="dropdown" style="width:10.5%">
@@ -42,7 +42,7 @@ HTML file that uses base template to create specific page for textbox editor
 
                         </div>
 
-                        <div contenteditable="true" id="RecommendationsDiv" class="divStyleRight">
+                        <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight">
 
                         {% for entry, recs in recommendations%}
                             <span>Misspelled Word: {{entry}}</span>
@@ -94,6 +94,12 @@ HTML file that uses base template to create specific page for textbox editor
             console.log(word);
             document.querySelector("#DropDown").innerHTML = word;
             document.getElementById("LangSelectTextArea").innerHTML = word;
+        }
+
+        function setLanguage(){
+            {%if langSelect%}
+                document.querySelector("#DropDown").innerHTML = "{{langSelect}}";
+            {%endif%}
         }
     </script>
 

@@ -39,7 +39,7 @@ def index_page():
             else:
                 results_words.append(('', TextToCheck_List[i]))
 
-        return render_template("index.html", misspelled_words=results_words, recommendations=recommendations)
+        return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
 
