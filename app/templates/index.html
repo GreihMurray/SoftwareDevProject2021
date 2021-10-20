@@ -12,8 +12,8 @@ HTML file that uses base template to create specific page for textbox editor
     <body class="text-center">
         <br>
         <!-- Drop down menu button -->
-        <div class="dropdown">
-            <button class="dropbtn" id="DropDown">Language Selection</button>
+        <div class="dropdown" style="width:10.5%">
+            <button class="dropbtn drop-btn-custom" id="DropDown">English</button>
             <div id="myDropdown" class="dropdown-content">
                 <!-- Right now, I have this directing back to the index page, but we can develop
                     other branch pages for the text box -->
@@ -31,7 +31,7 @@ HTML file that uses base template to create specific page for textbox editor
             <div class="container">
                 <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
                     <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
-
+                    <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">English</textarea>
                         <!--Editable div that will allow for input/destination for output-->
                         <!--Inluded for loop iterates through every word in input, prints in individual span element, and styles approrpiately-->
                         <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
@@ -93,6 +93,7 @@ HTML file that uses base template to create specific page for textbox editor
         function lang_select(word){
             console.log(word);
             document.querySelector("#DropDown").innerHTML = word;
+            document.getElementById("LangSelectTextArea").innerHTML = word;
         }
     </script>
 

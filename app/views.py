@@ -16,6 +16,8 @@ def about_page():
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
     if request.method == "POST":
+        langSelect = request.form.get("LangSelect")
+        print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
         TextToCheck_List = parse_txt(TextToCheck)
         results = check_word(TextToCheck_List)
