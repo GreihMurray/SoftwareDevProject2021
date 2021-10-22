@@ -102,6 +102,7 @@ HTML file that uses base template to create specific page for textbox editor
         function setLanguage(){
             {%if langSelect%}
                 document.querySelector("#DropDown").innerHTML = "{{langSelect}}";
+                document.getElementById("LangSelectTextArea").innerHTML = "{{ langSelect }}"
             {%endif%}
         }
     </script>
