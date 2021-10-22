@@ -20,8 +20,8 @@ HTML file that uses base template to create specific page for textbox editor
                 <button onclick="lang_select('English')" class="btn btn-light btn-style-custom">English</button>
                 <br>
                 <button onclick="lang_select('Irish')" class="btn btn-light btn-style-custom">Irish</button>
+            </div>
         </div>
-
         <br><br>
 
         <div class="container">
@@ -57,18 +57,22 @@ HTML file that uses base template to create specific page for textbox editor
                     <button type="submit">Spell Check</button>
                 </form>
             </div>
+        </div>
+<!--        <div class="container">-->
+<!--            <p style="text-align: right">Recommendations</p>-->
+<!--            <br>-->
     </body>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"
                 integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-                crossorigin="anonymous"></script>
+                crossorigin="anonymous">
+    </script>
 
     <script type="text/javascript">
         //Method that runs on form submission to get data from div and put into textarea to be sent to backend
         function getContent(){
             in_out_div = document.getElementById("InputOutputDiv")
             in_out_textarea = document.getElementById("InputOutputTextArea")
-
 
             /*Checks for child nodes in div
                 if child nodes are found, iterates through each one to get data
@@ -84,7 +88,8 @@ HTML file that uses base template to create specific page for textbox editor
                 }
             }
             else{
-                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML;
+                document.getElementById("InputOutputTextArea").value =
+                document.getElementById('InputOutputDiv').innerHTML;
             }
         }
 
@@ -102,14 +107,14 @@ HTML file that uses base template to create specific page for textbox editor
     </script>
 
     <style>
-        /* Dropdown Button */
-        .dropbtn {
-            background-color: #04AA6D;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-        }
+<!--        /* Dropdown Button */-->
+<!--        .dropbtn {-->
+<!--            background-color: #04AA6D;-->
+<!--            color: white;-->
+<!--            padding: 16px;-->
+<!--            font-size: 16px;-->
+<!--            border: none;-->
+<!--        }-->
 
         /* The container <div> - needed to position the dropdown content */
         .dropdown {
