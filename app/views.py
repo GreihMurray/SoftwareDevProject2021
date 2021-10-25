@@ -16,6 +16,8 @@ def about_page():
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
     if request.method == "POST":
+        langSelect = request.form.get("LangSelect")
+        print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
         TextToCheck_List = parse_txt(TextToCheck)
         results = check_word(TextToCheck_List)
@@ -37,7 +39,7 @@ def index_page():
             else:
                 results_words.append(('', TextToCheck_List[i]))
 
-        return render_template("index.html", misspelled_words=results_words, recommendations=recommendations)
+        return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
 
