@@ -29,6 +29,7 @@ class Word:
         return
 
     def addContext(self, prevW, midW):
+        self.incrmtInstances()
         if prevW in self.context:
             if midW in self.context[prevW]:
                 self.context[prevW][midW] += 1
