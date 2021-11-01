@@ -73,6 +73,7 @@ HTML file that uses base template to create specific page for textbox editor
         in_out_div.parentNode.innerHTML = newHTML;
     </script>
 
+>>>>>>> 83bbbc2d7da31c59b285f24cf14fdecf86531633
     </body>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -99,8 +100,6 @@ HTML file that uses base template to create specific page for textbox editor
 
                 If child node text is &nbsp, replaces with a standard space
             */
-
-            console.log(in_out_div.innerHTML);
 
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes

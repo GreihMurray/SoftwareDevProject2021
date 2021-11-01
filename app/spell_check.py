@@ -1,6 +1,7 @@
 from spellchecker import SpellChecker
 import regex
 
+
 def parse_txt(raw_input):
     init_word_list = regex.split(r'([^\p{L}0-9](?=\s)|[^\p{L}0-9]$|\s)', raw_input)
     print(init_word_list)
@@ -27,9 +28,20 @@ def check_word(input_list, word_list):
                 results.append(word_idx)
     return results
 
+
+def check_other_lang(word_list, dictionary):
+    results = []
+    print("Other Lang")
+    for idx, word in enumerate(word_list):
+        if word not in dictionary:
+            results.append(idx)
+    return results
+
+
 def word_candidates(word_to_check):
     check = SpellChecker()
     return check.candidates(word_to_check)
+
 
 def sort_by_count(word_list):
     return sorted(word_list, key=lambda x: x[1], reverse=True)
