@@ -20,7 +20,7 @@ def about_page():
 # Handles the index page, which contains the spellchecking system 
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
-    irish_dict = load_dict('cumulative_irish.csv')
+    Irish = load_dict('cumulative_irish.csv')
     if request.method == "POST":
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
@@ -30,8 +30,8 @@ def index_page():
         TextToCheck_List = parse_txt(TextToCheck)
         if langSelect == "English":
             results = check_word(TextToCheck_List)
-        elif langSelect == "Irish":
-            results = check_other_lang(TextToCheck_List, irish_dict)
+        else:
+            results = check_other_lang(TextToCheck_List, langSelect)
         print("Input Text")
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
