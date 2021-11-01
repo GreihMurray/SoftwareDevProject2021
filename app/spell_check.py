@@ -20,6 +20,14 @@ def check_word(word_list):
 
     return results
 
+def check_other_lang(word_list, dictionary):
+    results = []
+    print("Other Lang")
+    for idx, word in enumerate(word_list):
+        if word not in dictionary:
+            results.append(idx)
+    return results
+
 def word_candidates(word_to_check):
     check = SpellChecker()
     return check.candidates(word_to_check)

@@ -81,6 +81,8 @@ HTML file that uses base template to create specific page for textbox editor
                 If no child nodes are found, adds contents of div to inputoutput text area
             */
 
+            console.log(in_out_div.innerHTML);
+
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
                 for(var i = 1; i < child_nodes.length; i += 2){
