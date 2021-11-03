@@ -28,11 +28,12 @@ def index_page():
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
-        TextToCheck_List = parse_txt(TextToCheck)
         results = []
         if langSelect == "English":
+            TextToCheck_List = parse_txt(TextToCheck)
             results = check_word(TextToCheck_List)
         else:
+            TextToCheck_List = parse_txt_other_lang(TextToCheck)
             results = check_other_lang(TextToCheck_List, lang_dictionaries[langSelect])
         print("Input Text")
         print(TextToCheck+"\n")

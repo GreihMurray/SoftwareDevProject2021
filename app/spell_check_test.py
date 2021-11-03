@@ -1,8 +1,8 @@
 import unittest
-from .spell_check import *
-from .load_dictionaries import *
-#from app.spell_check import *
-#from app.load_dictionaries import *
+#from .spell_check import *
+#from .load_dictionaries import *
+from app.spell_check import *
+from app.load_dictionaries import *
 
 lang_dictionaries = {}
 lang_dictionaries["Irish"] = load_dict('cumulative_irish.csv')
@@ -14,6 +14,13 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(parse_txt("single"), ['single'])
         self.assertEqual(parse_txt("I want 2 check numbers & characters"), ['I', 'want', '2', 'check', 'numbers', '&', 'characters'])
         self.assertEqual(parse_txt("Let's test this! It is great to be @ the ballgame, with my friend!"), ["Let's", 'test', 'this', '!', 'It', 'is', 'great', 'to', 'be', '@', 'the', 'ballgame', ',', 'with', 'my', 'friend', '!'])
+
+    def test_parse_text_Irish(self):
+        self.assertEqual(parse_txt_other_lang('Briathra Amós, aoire de chuid Theacóá'), ['Briathra', 'Amós', ',', 'aoire', 'de', 'chuid', 'Theacóá'])
+        self.assertEqual(parse_txt_other_lang('Mrtre seo a deir an Tiarna'), ['Mrtre', 'seo', 'a', 'deir', 'an', 'Tiarna'])
+        self.assertEqual(parse_txt_other_lang('Fís a bhí aige faoi Iosrael i laethanta Uiziá, rí Iúdá'), ['Fís', 'a', 'bhí', 'aige', 'faoi', 'Iosrael', 'i', 'laethanta', 'Uiziá', ',', 'rí', 'Iúdá'])
+        self.assertEqual(parse_txt_other_lang('agus i laethanta Iarobám mac Ióáis, rí Iosrael'), ['agus', 'i', 'laethanta', 'Iarobám', 'mac', 'Ióáis', ',', 'rí', 'Iosrael'])
+        self.assertEqual(parse_txt_other_lang('dhá bhliain roimh an gcrith talún. Agus dúirt sé'), ['dhá', 'bhliain', 'roimh', 'an', 'gcrith', 'talún', '.', 'Agus', 'dúirt', 'sé'])
 
     def test_check_word(self):
         self.assertEqual(check_word(["Here", 'is', 'a', 'mispelled', 'word']), [3])
