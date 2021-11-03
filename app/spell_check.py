@@ -17,6 +17,17 @@ def parse_txt(raw_input):
             input_list.append(word)
     return input_list, word_list
 
+def parse_txt_other_lang(raw_input):
+    init_word_list = re.split(' ', raw_input)
+    word_list = []
+    for word in init_word_list:
+        if word and word != ' ':
+            if word[-1] in '\.\?!,;_:%“”\' …\+"’‘':
+                word_list.append(word[0:len(word)-1])
+                word_list.append(word[-1])
+            else:
+                word_list.append(word)
+    return word_list
 
 def check_word(input_list, word_list):
     print(word_list)
