@@ -1,3 +1,4 @@
+import unicodedata
 from spellchecker import SpellChecker
 import re
 
@@ -22,9 +23,10 @@ def check_word(word_list):
 
 def check_other_lang(word_list, dictionary):
     results = []
-    print("Other Lang")
     for idx, word in enumerate(word_list):
-        if word not in dictionary:
+        lower_word = str(unicodedata.normalize('NFC', word)).lower()
+        lower_word = lower_word.strip()
+        if lower_word not in dictionary and lower_word not in ',.!@#$/;\'':
             results.append(idx)
     return results
 
