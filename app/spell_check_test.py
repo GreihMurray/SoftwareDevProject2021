@@ -1,6 +1,6 @@
 import unittest
 from .spell_check import *
-from load_dictionaries import *
+from .load_dictionaries import *
 #from app.spell_check import *
 #from app.load_dictionaries import *
 
