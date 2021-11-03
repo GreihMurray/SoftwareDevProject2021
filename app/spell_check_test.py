@@ -1,6 +1,8 @@
 import unittest
-from app.spell_check import *
-from app.load_dictionaries import *
+from .spell_check import *
+from load_dictionaries import *
+#from app.spell_check import *
+#from app.load_dictionaries import *
 
 lang_dictionaries = {}
 lang_dictionaries["Irish"] = load_dict('cumulative_irish.csv')
