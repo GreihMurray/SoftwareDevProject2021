@@ -37,10 +37,20 @@ def check_other_lang(word_list, dictionary):
     for idx, word in enumerate(word_list):
         lower_word = str(unicodedata.normalize('NFC', word)).lower()
         lower_word = lower_word.strip()
-        if lower_word not in dictionary and lower_word not in ',.!@#$/;\'':
+        if lower_word not in dictionary and lower_word not in ',.!@#$/;:\'':
             results.append(idx)
     return results
 
 def word_candidates(word_to_check):
     check = SpellChecker()
     return check.candidates(word_to_check)
+
+def recombine(word_list):
+    for word in word_list:
+        word_index = word_list.index(word)
+        print(word_list)
+        print('/////////////////////////', word)
+        if word[1] in ',.!;:' and word != word_list[0]:
+            word_list[word_index - 1][1] += word[1]
+            word_list.pop(word_index)
+    return word_list

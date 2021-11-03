@@ -53,9 +53,10 @@ def index_page():
             print(TextToCheck_List[idx])
         for i in range (0, len(TextToCheck_List)):
             if i in results:
-                results_words.append(('Misspelled_words', TextToCheck_List[i]))
+                results_words.append(['Misspelled_words', TextToCheck_List[i]])
             else:
-                results_words.append(('', TextToCheck_List[i]))
+                results_words.append(['', TextToCheck_List[i]])
+        results_words = recombine(results_words)
 
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
