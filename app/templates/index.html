@@ -69,6 +69,11 @@ HTML file that uses base template to create specific page for textbox editor
     </script>
 
     <script type="text/javascript">
+        //Prevents resubmission of form when page is refreshed
+        if (window.history.replaceState) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+
         //Method that runs on form submission to get data from div and put into textarea to be sent to backend
         function getContent(){
             in_out_div = document.getElementById("InputOutputDiv")
