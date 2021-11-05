@@ -1,8 +1,8 @@
 import unittest
-#from .spell_check import *
-#from .load_dictionaries import *
-from app.spell_check import *
-from app.load_dictionaries import *
+from .spell_check import *
+from .load_dictionaries import *
+#from app.spell_check import *
+#from app.load_dictionaries import *
 
 lang_dictionaries = {}
 lang_dictionaries["Irish"] = load_dict('cumulative_irish.csv')
@@ -26,6 +26,13 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(check_word(["Here", 'is', 'a', 'mispelled', 'word']), [3])
         self.assertEqual(check_word(['letz', 'yuse', 'compleatly', 'mispelled', 'centense']), [0,1,2,3,4])
         self.assertEqual(check_word(['Let\'z', 'test', 'this', '!', 'It', 'is', 'grait', 'to', 'be', '@', 'the', 'balgame', ',', 'with', 'my', 'friend','!']), [0,6,11])
+
+    def test_recombine(self):
+        self.assertEqual(recombine([['', 'Here'], ['', ','], ['', 'is'], ['', 'random'], ['', '!'], ['', 'text']]), [['', 'Here,'], ['', 'is'], ['', 'random!'], ['', 'text']])
+        self.assertEqual(recombine([['', 'Briathra'], ['', '?'], ['', 'random'], ['', '!'], ['', 'thing'], ['', 'text']]), [['', 'Briathra?'], ['', 'random!'], ['', 'thing'], ['', 'text']])
+        self.assertEqual(recombine([['', 'Here'], ['', ','], ['', 'mispelled'], ['', 'Tiarna']]), [['', 'Here,'], ['', 'mispelled'], ['', 'Tiarna']])
+        self.assertEqual(recombine([['', ' '], ['', ','], ['', ' '], ['', ' ']]), [['', ' ,'], ['', ' '], ['', ' ']])
+        self.assertEqual(recombine([['', 'H'], ['', 'e'], ['', ','], ['', 'is'], ['', 'there'], ['', '?']]), [['', 'H'], ['', 'e,'], ['', 'is'], ['', 'there?']])
 
     def test_check_other_langs_irish(self):
         self.assertEqual(check_other_lang(['Mar', 'seo', 'a', 'deir', 'an', 'Tiarna'], lang_dictionaries['Irish']), [])

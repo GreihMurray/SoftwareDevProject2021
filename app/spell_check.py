@@ -46,11 +46,10 @@ def word_candidates(word_to_check):
     return check.candidates(word_to_check)
 
 def recombine(word_list):
+    total_removed = 0;
     for word in word_list:
         word_index = word_list.index(word)
-        print(word_list)
-        print('/////////////////////////', word)
-        if word[1] in ',.!;:' and word != word_list[0]:
+        if word[1] in ',.!?;:' and word != word_list[0]:
             word_list[word_index - 1][1] += word[1]
             word_list.pop(word_index)
     return word_list
