@@ -21,7 +21,6 @@ def about_page():
 def index_page():
     if request.method == "POST":
         all_data = request.get_data(as_text=True)
-        print('All data: ', all_data)
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
