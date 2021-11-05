@@ -1,4 +1,5 @@
 import math
+<<<<<<< HEAD
 import json
 
 
@@ -11,6 +12,20 @@ class Word:
         else:
             self.instances = instances
         self.context = context
+=======
+
+
+class Word:
+    def __init__(self, text="", prevW="", midW=""):
+        self.text = text
+        self.recommend = []
+        if text == "":
+            self.instances = 0
+            self.context = {}
+        else:
+            self.instances = 1
+            self.context = {prevW: {midW: 1}}
+>>>>>>> 85486f7 (Development (#33))
 
     def setText(self, inArg):
         self.text = inArg
@@ -28,6 +43,7 @@ class Word:
         self.recommend.append(word)
         return
 
+<<<<<<< HEAD
     def addContext(self, aftW, midW):
         self.incrmtInstances()
         if aftW in self.context:
@@ -51,3 +67,16 @@ def loadDictionary(filename):
     for word in db_dict:
         filtDictionary.update({word: Word(**db_dict[word])})
     return filtDictionary
+=======
+    def addContext(self, prevW, midW):
+        if prevW in self.context:
+            if midW in self.context[prevW]:
+                self.context[prevW][midW] += 1
+            else:
+                self.context[prevW].update({midW: 1})
+        elif self.context:
+            self.context.update({prevW: {midW: 1}})
+        else:
+            self.context = {prevW: {midW: 1}}
+        return
+>>>>>>> 85486f7 (Development (#33))
