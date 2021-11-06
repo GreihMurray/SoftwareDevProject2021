@@ -19,11 +19,11 @@ class TestCreateDBMethods(unittest.TestCase):
                          ['an','email', 'address'])
 
     def test_assembleDB(self):
-        test_db = assembleDB(['Here', 'is', 'a', 'sentence', 'There', 'are', 'repeats', 'this', 'is', 'a', 'test'])
-        self.assertEqual({'is': {'a': 1}}, test_db['Here'].context)
-        self.assertEqual(1, test_db['Here'].instances)
-        self.assertEqual({'a': {'sentence': 1, 'test': 1}}, test_db['is'].context)
-        self.assertEqual({'There': {'are': 1}}, test_db['sentence'].context)
+        test_db = assembleDB(['here', 'is', 'a', 'sentence', 'there', 'are', 'repeats', 'this', 'is', 'a', 'test'])
+        self.assertEqual({'a': {'is': 1}}, test_db['here'].context)
+        self.assertEqual(1, test_db['here'].instances)
+        self.assertEqual({'sentence': {'a': 1}, 'test': {'a': 1}}, test_db['is'].context)
+        self.assertEqual({'are': {'there': 1}}, test_db['sentence'].context)
         self.assertEqual(2, test_db['is'].instances)
 
     def test_filterDB(self):
@@ -31,11 +31,11 @@ class TestCreateDBMethods(unittest.TestCase):
                               'we', 'want', 'there', 'to', 'be', 'repeat', 'sentence', 'so', 'that', 'there', 'can',
                               'be', 'a', 'test', 'it', 'is', 'a', 'test', 'there', 'to', 'be'])
         filterDB(test_db, 2, 2)
-        self.assertEqual({'a': {'test': 2}}, test_db['is'].context)
+        self.assertEqual({'test': {'a': 2}}, test_db['is'].context)
         self.assertEqual(3, test_db['is'].instances)
         self.assertEqual(False, 'here' in test_db)
         self.assertEqual(False, 'want' in test_db)
-        self.assertEqual({'to': {'be': 2}}, test_db['there'].context)
+        self.assertEqual({'be': {'to': 2}}, test_db['there'].context)
         self.assertEqual(4, test_db['there'].instances)
 
 if __name__ == '__main__':
