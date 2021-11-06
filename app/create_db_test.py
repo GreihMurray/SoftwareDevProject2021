@@ -5,15 +5,15 @@ from .create_db import *
 class TestCreateDBMethods(unittest.TestCase):
     def test_saveCharWords(self):
         self.assertEqual(saveCharWords(['Here', ' ', 'is', ' ', 'a', ' ', 'sentence'], [0, 2, 4, 6]),
-                         ['Here', 'is', 'a', 'sentence'])
+                         ['here', 'is', 'a', 'sentence'])
         self.assertEqual(saveCharWords(['single'], [0]), ['single'])
-        self.assertEqual(parse_txt("I want 2 check numbers & characters"),
-                         (['I', ' ', 'want', ' ', '2', ' ', 'check', ' ', 'numbers', ' ', '&', ' ', 'characters'],
-                         [0, 2, 6, 8, 12]))
+        self.assertEqual(saveCharWords(['I', ' ', 'want', ' ', '2', ' ', 'check', ' ', 'numbers', ' ', '&', ' ',
+                                        'characters'], [0, 2, 4, 6, 8, 12]),
+                         ['i', 'want', 'check', 'numbers', 'characters'])
         self.assertEqual(saveCharWords(["Let's", ' ', 'test', ' ', 'this', '!', ' ', 'It', ' ', 'is', ' ', 'great', ' ',
                                         'to', ' ','be', ' ', '@', ' ', 'the', ' ', 'ballgame', ',', ' ', 'with', ' ',
                                         'my', ' ', 'friend', '!'],
-                         [0, 2, 4, 7, 9, 11, 13, 15, 19, 21, 24, 26, 28]), ["Let's", 'test', 'this', 'It', 'is', 'great',
+                         [0, 2, 4, 7, 9, 11, 13, 15, 19, 21, 24, 26, 28]), ["let's", 'test', 'this', 'it', 'is', 'great',
                                         'to', 'be', 'the', 'ballgame', 'with', 'my', 'friend'])
         self.assertEqual(saveCharWords(['an',' ', 'email', ' ', 'address', ':', ' ', 'Email@goog.com'], [0, 2, 4, 7]),
                          ['an','email', 'address'])
