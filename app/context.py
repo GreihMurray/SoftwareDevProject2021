@@ -2,7 +2,7 @@ import math
 
 
 class Word:
-    def __init__(self, text="", prevW="", midW=""):
+    def __init__(self, text="", aftW="", midW=""):
         self.text = text
         self.recommend = []
         if text == "":
@@ -10,7 +10,7 @@ class Word:
             self.context = {}
         else:
             self.instances = 1
-            self.context = {prevW: {midW: 1}}
+            self.context = {aftW: {midW: 1}}
 
     def setText(self, inArg):
         self.text = inArg
@@ -28,14 +28,15 @@ class Word:
         self.recommend.append(word)
         return
 
-    def addContext(self, prevW, midW):
-        if prevW in self.context:
-            if midW in self.context[prevW]:
-                self.context[prevW][midW] += 1
+    def addContext(self, aftW, midW):
+        self.incrmtInstances()
+        if aftW in self.context:
+            if midW in self.context[aftW]:
+                self.context[aftW][midW] += 1
             else:
-                self.context[prevW].update({midW: 1})
+                self.context[aftW].update({midW: 1})
         elif self.context:
-            self.context.update({prevW: {midW: 1}})
+            self.context.update({aftW: {midW: 1}})
         else:
-            self.context = {prevW: {midW: 1}}
+            self.context = {aftW: {midW: 1}}
         return
