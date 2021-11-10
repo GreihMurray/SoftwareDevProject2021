@@ -54,7 +54,7 @@ def index_page():
             else:
                 print("Add other lang recommendations")
                 recommendations.append((word, ''))
-            print(recommendations)
+            # print(recommendations)
         for idx in results:
             print(input_list[idx])
         for i in range (0, len(input_list)):

@@ -1,16 +1,22 @@
 import unittest
+<<<<<<< HEAD
 #from .spell_check import *
 <<<<<<< HEAD
 from app.spell_check import *
+=======
+>>>>>>> db95fe3 (Minor changes)
 from .spell_check import *
 from .load_dictionaries import *
 #from app.spell_check import *
 #from app.load_dictionaries import *
+<<<<<<< HEAD
 =======
 #from .load_dictionaries import *
 from app.spell_check import *
 from app.load_dictionaries import *
 >>>>>>> 0b1ac42 (Finishing Basic Irish Support and adding tests)
+=======
+>>>>>>> db95fe3 (Minor changes)
 
 lang_dictionaries = {}
 lang_dictionaries["Irish"] = load_dict('cumulative_irish.csv')
