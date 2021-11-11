@@ -9,7 +9,7 @@ class TestCreateDBMethods(unittest.TestCase):
         self.assertEqual(saveCharWords(['single'], [0]), ['single'])
         self.assertEqual(parse_txt("I want 2 check numbers & characters"),
                          (['I', ' ', 'want', ' ', '2', ' ', 'check', ' ', 'numbers', ' ', '&', ' ', 'characters'],
-                         [0, 2, 4, 6, 8, 12]))
+                         [0, 2, 6, 8, 12]))
         self.assertEqual(saveCharWords(["Let's", ' ', 'test', ' ', 'this', '!', ' ', 'It', ' ', 'is', ' ', 'great', ' ',
                                         'to', ' ','be', ' ', '@', ' ', 'the', ' ', 'ballgame', ',', ' ', 'with', ' ',
                                         'my', ' ', 'friend', '!'],

@@ -1,14 +1,16 @@
 from spellchecker import SpellChecker
 import re
+import regex
 
 def parse_txt(raw_input):
-    init_word_list = re.split(r'([^a-zA-Z0-9\'])', raw_input)
+    init_word_list = regex.split(r'([^\p{L}0-9](?=\s)|[^\p{L}0-9]$|\s)', raw_input)
+    print(init_word_list)
     input_list = []
     word_list = []
     for word in init_word_list:
         if word == ' ':
             input_list.append(word)
-        elif re.match(r'([^a-zA-Z0-9\'])',word):
+        elif regex.search(r'([^\p{L}\'\-])', word):
             input_list.append(word)
         elif word:
             word_list.append(len(input_list))

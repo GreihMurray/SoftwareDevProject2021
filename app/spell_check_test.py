@@ -9,11 +9,17 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(parse_txt("single"), (['single'], [0]))
         self.assertEqual(parse_txt("I want 2 check numbers & characters"),
                          (['I', ' ', 'want', ' ', '2', ' ', 'check', ' ', 'numbers', ' ', '&', ' ', 'characters'],
-                         [0, 2, 4, 6, 8, 12]))
+                         [0, 2, 6, 8, 12]))
         self.assertEqual(parse_txt("Let's test this! It is great to be @ the ballgame, with my friend!"),
                          (["Let's", ' ', 'test', ' ', 'this', '!', ' ', 'It', ' ', 'is', ' ', 'great', ' ', 'to', ' ',
                           'be', ' ', '@', ' ', 'the', ' ', 'ballgame', ',', ' ', 'with', ' ', 'my', ' ', 'friend', '!'],
                          [0, 2, 4, 7, 9, 11, 13, 15, 19, 21, 24, 26, 28]))
+        self.assertEqual(parse_txt("Béal bocht pian géarmhíochaine leuceem géarfolaisteacha géarmhíochaine and now an "
+                                   "email hi@gmail.com this & that"),
+                         (["Béal", ' ', 'bocht', ' ', 'pian', ' ', 'géarmhíochaine', ' ', 'leuceem', ' ',
+                           'géarfolaisteacha', ' ', 'géarmhíochaine', ' ', 'and', ' ',
+                           'now', ' ', 'an', ' ', 'email', ' ', 'hi@gmail.com', ' ', 'this', ' ', '&', ' ', 'that'],
+                          [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28]))
 
     def test_check_word(self):
         self.assertEqual(check_word(["Here", ' ', 'is', ' ', 'a', ' ', 'mispelled', ' ', 'word'], [0, 2, 4, 6, 8]), [6])
