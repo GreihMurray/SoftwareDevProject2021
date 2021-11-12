@@ -96,24 +96,25 @@ HTML file that uses base template to create specific page for textbox editor
                 adds that data to inputoutput text area so it can be passed to backend properly
 
                 If no child nodes are found, adds contents of div to inputoutput text area
+
+                If child node text is &nbsp, replaces with a standard space
             */
 
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
                 for(var i = 0; i < child_nodes.length; i += 1){
+                    console.log('/' + child_nodes[i].innerHTML + '\\');
                     if(child_nodes[i].innerHTML == "&nbsp;"){
                         in_out_textarea.value += ' ';
                     }
                     else{
-                        in_out_textarea.value += child_nodes[i].innerHTML.replace("&nbsp;", " ") + ' ';
+                        in_out_textarea.value += child_nodes[i].innerHTML.replaceAll("&nbsp;", " ");
                     }
                 }
             }
             else{
-                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML.replace("&nbsp;", " ");
+                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML.replaceAll("&nbsp;", " ");
             }
-
-            console.log(in_out_textarea.value);
         }
 
         function lang_select(word){
