@@ -19,25 +19,25 @@ def index_page():
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
-        TextToCheck_List = parse_txt(TextToCheck)
-        results = check_word(TextToCheck_List)
+        input_list, word_list = parse_txt(TextToCheck)
+        results = check_word(input_list, word_list)
         print("Input Text")
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
         results_words = []
         recommendations = []
         for idx in results:
-            print(TextToCheck_List[idx])
-            word = TextToCheck_List[idx]
+            print(input_list[idx])
+            word = input_list[idx]
             recommendations.append((word, word_candidates(word)))
             print(recommendations)
         for idx in results:
-            print(TextToCheck_List[idx])
-        for i in range (0, len(TextToCheck_List)):
+            print(input_list[idx])
+        for i in range (0, len(input_list)):
             if i in results:
-                results_words.append(('Misspelled_words', TextToCheck_List[i]))
+                results_words.append(('Misspelled_words', input_list[i]))
             else:
-                results_words.append(('', TextToCheck_List[i]))
+                results_words.append(('', input_list[i]))
 
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
