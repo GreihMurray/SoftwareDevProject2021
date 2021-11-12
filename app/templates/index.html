@@ -103,13 +103,7 @@ HTML file that uses base template to create specific page for textbox editor
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
                 for(var i = 0; i < child_nodes.length; i += 1){
-                    console.log('/' + child_nodes[i].innerHTML + '\\');
-                    if(child_nodes[i].innerHTML == "&nbsp;"){
-                        in_out_textarea.value += ' ';
-                    }
-                    else{
-                        in_out_textarea.value += child_nodes[i].innerHTML.replaceAll("&nbsp;", " ");
-                    }
+                    in_out_textarea.value += child_nodes[i].innerHTML.replaceAll("&nbsp;", " ");
                 }
             }
             else{
