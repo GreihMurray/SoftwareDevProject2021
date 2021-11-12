@@ -100,14 +100,20 @@ HTML file that uses base template to create specific page for textbox editor
 
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
-                for(var i = 1; i < child_nodes.length; i += 2){
-                    in_out_textarea.value += child_nodes[i].innerHTML.replace("&nbsp;", " ") + ' '
+                for(var i = 0; i < child_nodes.length; i += 1){
+                    if(child_nodes[i].innerHTML == "&nbsp;"){
+                        in_out_textarea.value += ' ';
+                    }
+                    else{
+                        in_out_textarea.value += child_nodes[i].innerHTML.replace("&nbsp;", " ") + ' ';
+                    }
                 }
             }
             else{
-                document.getElementById("InputOutputTextArea").value =
-                document.getElementById('InputOutputDiv').innerHTML.replace("&nbsp;", " ");
+                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML.replace("&nbsp;", " ");
             }
+
+            console.log(in_out_textarea.value);
         }
 
         function lang_select(word){
