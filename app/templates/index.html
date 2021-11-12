@@ -36,7 +36,12 @@ HTML file that uses base template to create specific page for textbox editor
                         <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
 
                         {% for word in misspelled_words%}
-                            <span class={{word[0]}}>{{word[1]}}</span>
+                            {%if word[1] != ' '%}
+                                <span class={{word[0]}} style="display:inline-block;">{{word[1]}}</span>
+                            {%endif%}
+                            {%if word[1] == ' '%}
+                                <span style="word-spacing:2px;">&nbsp;</span>
+                            {%endif%}
                         {% endfor %}
 
                         </div>
@@ -61,6 +66,13 @@ HTML file that uses base template to create specific page for textbox editor
 <!--        <div class="container">-->
 <!--            <p style="text-align: right">Recommendations</p>-->
 <!--            <br>-->
+    <script>
+        var in_out_div = document.getElementById("InputOutputDiv");
+        var parent = in_out_div.parentNode.innerHTML;
+        var newHTML = parent.replace(/\>\s+</g, "><");
+        in_out_div.parentNode.innerHTML = newHTML;
+    </script>
+
     </body>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"
@@ -84,17 +96,18 @@ HTML file that uses base template to create specific page for textbox editor
                 adds that data to inputoutput text area so it can be passed to backend properly
 
                 If no child nodes are found, adds contents of div to inputoutput text area
+
+                If child node text is &nbsp, replaces with a standard space
             */
 
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
-                for(var i = 1; i < child_nodes.length; i += 2){
-                    in_out_textarea.value += child_nodes[i].innerHTML + ' '
+                for(var i = 0; i < child_nodes.length; i += 1){
+                    in_out_textarea.value += child_nodes[i].innerHTML.replaceAll("&nbsp;", " ");
                 }
             }
             else{
-                document.getElementById("InputOutputTextArea").value =
-                document.getElementById('InputOutputDiv').innerHTML;
+                document.getElementById("InputOutputTextArea").value = document.getElementById('InputOutputDiv').innerHTML.replaceAll("&nbsp;", " ");
             }
         }
 
