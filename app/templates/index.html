@@ -36,7 +36,12 @@ HTML file that uses base template to create specific page for textbox editor
                         <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft">
 
                         {% for word in misspelled_words%}
-                            <span class={{word[0]}}>{{word[1]}}</span>
+                            {%if word[1] != ' '%}
+                                <span class={{word[0]}} style="display:inline-block;">{{word[1]}}</span>
+                            {%endif%}
+                            {%if word[1] == ' '%}
+                                <span style="word-spacing:2px;">&nbsp;</span>
+                            {%endif%}
                         {% endfor %}
 
                         </div>
@@ -96,12 +101,12 @@ HTML file that uses base template to create specific page for textbox editor
             if(in_out_div.childNodes.length > 1){
                 child_nodes = in_out_div.childNodes
                 for(var i = 1; i < child_nodes.length; i += 2){
-                    in_out_textarea.value += child_nodes[i].innerHTML + ' '
+                    in_out_textarea.value += child_nodes[i].innerHTML.replace("&nbsp;", " ") + ' '
                 }
             }
             else{
                 document.getElementById("InputOutputTextArea").value =
-                document.getElementById('InputOutputDiv').innerHTML;
+                document.getElementById('InputOutputDiv').innerHTML.replace("&nbsp;", " ");
             }
         }
 
