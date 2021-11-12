@@ -1,5 +1,4 @@
 from spellchecker import SpellChecker
-import re
 import regex
 
 def parse_txt(raw_input):
@@ -23,7 +22,7 @@ def check_word(input_list, word_list):
     check = SpellChecker()
     results = []
     for word_idx in word_list:
-        if not re.match('([^a-zA-Z0-9])', input_list[word_idx]):
+        if not regex.search(r'([^\p{L}\'\-])', input_list[word_idx]):
             if not check[input_list[word_idx]]:
                 results.append(word_idx)
     return results
