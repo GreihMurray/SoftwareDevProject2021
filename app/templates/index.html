@@ -61,6 +61,13 @@ HTML file that uses base template to create specific page for textbox editor
 <!--        <div class="container">-->
 <!--            <p style="text-align: right">Recommendations</p>-->
 <!--            <br>-->
+    <script>
+        var in_out_div = document.getElementById("InputOutputDiv");
+        var parent = in_out_div.parentNode.innerHTML;
+        var newHTML = parent.replace(/\>\s+</g, "><");
+        in_out_div.parentNode.innerHTML = newHTML;
+    </script>
+
     </body>
 
     <script src="https://code.jquery.com/jquery-3.5.1.js"
