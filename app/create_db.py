@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import re
+import unicodedata
 from munch import DefaultMunch
 
 from .spell_check import *
@@ -10,7 +11,7 @@ def saveCharWords(rawArray, words):
     wordArray = []
     for i in words:
         if not re.search(r'[^a-zA-Z\']', rawArray[i]):
-            wordArray.append(rawArray[i])
+            wordArray.append(str(unicodedata.normalize('NFC', rawArray[i])).lower())
     return wordArray
 
 def assembleDB(wordArray):
