@@ -1,5 +1,6 @@
 import unittest
 from .spell_check import *
+#from app.spell_check import *
 
 class TestSpellCheckMethods(unittest.TestCase):
 
@@ -28,6 +29,13 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(check_word(['Let\'z', ' ', 'test', ' ', 'this', '!', ' ', 'It', ' ', 'is', ' ', 'grait', ' ',
                                      'to', ' ', 'be', ' ', '@', ' ', 'the', ' ', 'balgame', ',', ' ', 'with', ' ', 'my',
                                     ' ', 'friend','!'], [0, 2, 4, 7, 9, 11, 13, 15, 19, 21, 24, 26, 28]), [0, 11, 21])
+
+    def test_sort_by_count(self):
+        self.assertEqual(sort_by_count([['test', 10], ['text', 12], ['other', 8], ['thing', 4]]), [['text', 12], ['test', 10], ['other', 8], ['thing', 4]])
+        self.assertEqual(sort_by_count([['test', 11], ['text', 1], ['other', 4], ['thing', 9]]), [['test', 11], ['thing', 9], ['other', 4], ['text', 1]])
+        self.assertEqual(sort_by_count([['test', 1], ['text', 2], ['other', 3], ['thing', 4]]), [['thing', 4], ['other', 3], ['text', 2], ['test', 1]])
+        self.assertEqual(sort_by_count([['test', 10], ['text', 12], ['other', 8], ['thing', 40]]), [['thing', 40], ['text', 12], ['test', 10], ['other', 8]])
+        self.assertEqual(sort_by_count([['test', 10], ['text', 10], ['other', 10], ['thing', 10]]), [['test', 10], ['text', 10], ['other', 10], ['thing', 10]])
 
 if __name__ == '__main__':
     unittest.main()
