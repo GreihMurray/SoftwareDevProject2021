@@ -6,7 +6,6 @@ Routing file that holds the information for the separate webpage links.
 from app import app
 from flask import render_template, request
 from .spell_check import *
-from .load_dictionaries import *
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
@@ -20,8 +19,9 @@ def about_page():
 # Handles the index page, which contains the spellchecking system 
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
-    Irish = load_dict('cumulative_irish.csv')
     if request.method == "POST":
+        all_data = request.get_data(as_text=True)
+        print('All data: ', all_data)
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
@@ -31,7 +31,7 @@ def index_page():
         if langSelect == "English":
             results = check_word(TextToCheck_List)
         else:
-            results = check_other_lang(TextToCheck_List, langSelect)
+            results = check_other_lang(TextToCheck_List, lang_dictionaries[langSelect])
         print("Input Text")
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
@@ -41,6 +41,13 @@ def index_page():
             print(input_list[idx])
             word = input_list[idx]
             recommendations.append((word, word_candidates(word)))
+            print(TextToCheck_List[idx])
+            word = TextToCheck_List[idx]
+            if langSelect == 'English':
+                recommendations.append((word, word_candidates(word)))
+            else:
+                print("Add other lang recommendations")
+                recommendations.append((word, ''))
             print(recommendations)
         for idx in results:
             print(input_list[idx])

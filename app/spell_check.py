@@ -1,6 +1,6 @@
+import unicodedata
 from spellchecker import SpellChecker
 import regex
-
 
 def parse_txt(raw_input):
     init_word_list = regex.split(r'([^\p{L}0-9](?=\s)|[^\p{L}0-9]$|\s)', raw_input)
@@ -31,9 +31,9 @@ def check_word(input_list, word_list):
 
 def check_other_lang(word_list, dictionary):
     results = []
-    print("Other Lang")
     for idx, word in enumerate(word_list):
-        if word not in dictionary:
+        lower_word = str(unicodedata.normalize('NFC', word)).lower()
+        if lower_word not in dictionary and lower_word not in ',.!@#$/;\'':
             results.append(idx)
     return results
 
