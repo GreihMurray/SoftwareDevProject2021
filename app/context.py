@@ -1,16 +1,16 @@
 import math
+import json
 
 
 class Word:
-    def __init__(self, text="", aftW="", midW=""):
+    def __init__(self, text="", recommend=[], instances=0, context={}):
         self.text = text
-        self.recommend = []
-        if text == "":
-            self.instances = 0
-            self.context = {}
-        else:
+        self.recommend = recommend
+        if instances == 0 and text != "":
             self.instances = 1
-            self.context = {aftW: {midW: 1}}
+        else:
+            self.instances = instances
+        self.context = context
 
     def setText(self, inArg):
         self.text = inArg
@@ -40,3 +40,14 @@ class Word:
         else:
             self.context = {aftW: {midW: 1}}
         return
+
+def loadDictionary(filename):
+    f = open(filename)
+    text = f.read()
+    f.close()
+
+    db_dict = json.loads(text)
+    filtDictionary = {}
+    for word in db_dict:
+        filtDictionary.update({word: Word(**db_dict[word])})
+    return filtDictionary
