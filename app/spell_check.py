@@ -30,3 +30,6 @@ def check_word(input_list, word_list):
 def word_candidates(word_to_check):
     check = SpellChecker()
     return check.candidates(word_to_check)
+
+def sort_by_count(word_list):
+    return sorted(word_list, key=lambda x: x[1], reverse=True)
