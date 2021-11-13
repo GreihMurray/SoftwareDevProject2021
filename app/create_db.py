@@ -21,11 +21,11 @@ def assembleDB(wordArray):
             if word in db:
                 db[word].addContext(wordArray[i + 2], wordArray[i + 1])
             else:
-                db.update({word: Word(word, wordArray[i + 2], wordArray[i + 1])})
+                db.update({word: Word(word, context={wordArray[i + 2]: {wordArray[i + 1]: 1}})})
         elif i+1 < len(wordArray) and not isinstance(word, Word):
-            db.update({word: Word(word, '', wordArray[i + 1])})
+            db.update({word: Word(word, context={'': {wordArray[i + 1]: 1}})})
         elif not isinstance(word, Word):
-            db.update({word: Word(word, '', '')})
+            db.update({word: Word(word)})
     return db
 
 def filterDB(db, minInstances, minConstantInst):
