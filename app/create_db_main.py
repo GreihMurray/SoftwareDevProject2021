@@ -15,20 +15,20 @@ args = parser.parse_args()
 if args.p:
     wordArray = []
     for file in args.p:
-        f = open(file)
+        f = open(file, encoding='utf-8')
         text = f.read()
         f.close()
 
         rawArray, words = parse_txt(text)
         wordArray += saveCharWords(rawArray, words)
 
-    out = open('output.json', "w")
-    json_wordArray = json.dumps(wordArray)
+    out = open('output.json', "w", encoding='utf-8')
+    json_wordArray = json.dumps(wordArray, ensure_ascii=False)
     out.write(json_wordArray)
     out.close()
 
 if args.d:
-    f = open(args.d)
+    f = open(args.d, encoding='utf-8')
     text = f.read()
     f.close()
 
@@ -37,13 +37,13 @@ if args.d:
 
     db_dict = db_to_dict(db)
 
-    out = open('db_output.json', "a")
-    json_db = json.dumps(db_dict)
+    out = open('IrishCorpus/db_output.json', "a", encoding='utf-8')
+    json_db = json.dumps(db_dict, ensure_ascii=False)
     out.write(json_db)
     out.close()
 
 if args.f:
-    f = open(args.f[0])
+    f = open(args.f[0], encoding='utf-8')
     text = f.read()
     f.close()
 
@@ -52,7 +52,7 @@ if args.f:
 
     filterDB(db, int(args.f[1]), int(args.f[2]))
 
-    out = open('filtered_db_output.json', "a")
-    json_db = json.dumps(db)
+    out = open('IrishCorpus/filtered_db_output.json', "a", encoding='utf-8')
+    json_db = json.dumps(db, ensure_ascii=False)
     out.write(json_db)
     out.close()

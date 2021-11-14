@@ -2,15 +2,16 @@
 
 import re
 import unicodedata
+import regex
 from munch import DefaultMunch
 
-from .spell_check import *
-from .context import Word
+from spell_check import *
+from context import Word
 
 def saveCharWords(rawArray, words):
     wordArray = []
     for i in words:
-        if not re.search(r'[^a-zA-Z\']', rawArray[i]):
+        if not regex.search(r'([^\p{L}\'\-])', rawArray[i]):
             wordArray.append(str(unicodedata.normalize('NFC', rawArray[i])).lower())
     return wordArray
 
