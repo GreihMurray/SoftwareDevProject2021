@@ -11,9 +11,6 @@ from .context import *
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
 
-def _fix_encoding(string):
-    return string.encode('iso-8859-1').decode('utf8')
-
 # Handles the about page with basic information about how to use the spell checker
 @app.route('/')
 @app.route('/about')

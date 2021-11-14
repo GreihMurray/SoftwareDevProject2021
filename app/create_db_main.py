@@ -37,7 +37,7 @@ if args.d:
 
     db_dict = db_to_dict(db)
 
-    out = open('IrishCorpus/db_output.json', "a", encoding='utf-8')
+    out = open('db_output.json', "a", encoding='utf-8')
     json_db = json.dumps(db_dict, ensure_ascii=False)
     out.write(json_db)
     out.close()
@@ -52,7 +52,7 @@ if args.f:
 
     filterDB(db, int(args.f[1]), int(args.f[2]))
 
-    out = open('IrishCorpus/filtered_db_output.json', "a", encoding='utf-8')
+    out = open('filtered_db_output.json', "a", encoding='utf-8')
     json_db = json.dumps(db, ensure_ascii=False)
     out.write(json_db)
     out.close()
