@@ -1,6 +1,6 @@
 import math
 import json
-
+import os
 
 class Word:
     def __init__(self, text="", recommend=[], instances=0, context={}):
@@ -41,8 +41,10 @@ class Word:
             self.context = {aftW: {midW: 1}}
         return
 
-def loadDictionary(filename):
-    f = open(filename)
+def loadDictionary(file):
+    here = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(here, file)
+    f = open(filename, encoding='utf-8')
     text = f.read()
     f.close()
 

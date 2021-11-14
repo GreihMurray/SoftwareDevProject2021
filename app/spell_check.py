@@ -1,3 +1,5 @@
+import unicodedata
+
 from spellchecker import SpellChecker
 import regex
 
@@ -33,3 +35,12 @@ def word_candidates(word_to_check):
 
 def sort_by_count(word_list):
     return sorted(word_list, key=lambda x: x[1], reverse=True)
+
+def check_other_lang(input_list, word_list, dictionary):
+    results = []
+    for word_idx in word_list:
+        if not regex.search(r'([^\p{L}\'\-])', input_list[word_idx]):
+            lower_word = str(unicodedata.normalize('NFC', input_list[word_idx])).lower()
+            if lower_word not in dictionary.keys():
+                results.append(word_idx)
+    return results
