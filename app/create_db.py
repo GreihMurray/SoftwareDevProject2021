@@ -5,8 +5,8 @@ import unicodedata
 import regex
 from munch import DefaultMunch
 
-from spell_check import *
-from context import Word
+from .spell_check import *
+from .context import Word
 
 def saveCharWords(rawArray, words):
     wordArray = []
