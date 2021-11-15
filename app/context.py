@@ -1,8 +1,7 @@
 import math
 import json
-
 from .spell_check import sort_by_count
-
+import os
 
 class Word:
     def __init__(self, text="", recommend=[], instances=0, context={}):
@@ -43,6 +42,7 @@ class Word:
             self.context = {aftW: {midW: 1}}
         return
 
+
     def getContextRecs(self, aftW, numRecs):
         contextPairs = self.context[aftW]
         recs = []
@@ -52,8 +52,10 @@ class Word:
         sortedDictionary = sortedDictionary[:numRecs]
         return sortedDictionary
 
-def loadDictionary(filename):
-    f = open(filename)
+def loadDictionary(file):
+    here = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(here, file)
+    f = open(filename, encoding='utf-8')
     text = f.read()
     f.close()
 

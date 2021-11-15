@@ -1,6 +1,6 @@
 import unittest
-from .spell_check import *
-#from app.spell_check import *
+#from .spell_check import *
+from app.spell_check import *
 
 class TestSpellCheckMethods(unittest.TestCase):
 
@@ -36,6 +36,14 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(sort_by_count([['test', 1], ['text', 2], ['other', 3], ['thing', 4]]), [['thing', 4], ['other', 3], ['text', 2], ['test', 1]])
         self.assertEqual(sort_by_count([['test', 10], ['text', 12], ['other', 8], ['thing', 40]]), [['thing', 40], ['text', 12], ['test', 10], ['other', 8]])
         self.assertEqual(sort_by_count([['test', 10], ['text', 10], ['other', 10], ['thing', 10]]), [['test', 10], ['text', 10], ['other', 10], ['thing', 10]])
+
+    # def test_check_other_langs_irish(self):
+    #     self.assertEqual(check_other_lang(['Mar', 'seo', 'a', 'deir', 'an', 'Tiarna'], lang_dictionaries['Irish']), [])
+    #     self.assertEqual(check_other_lang(['Mrtre', 'seo', 'a', 'deir', 'an', 'Tiarna'], lang_dictionaries['Irish']), [0])
+    #     self.assertEqual(check_other_lang(['martttr', 'SEO', 'adfdf', 'plopl', 'lokoil'], lang_dictionaries['Irish']), [0,2,3,4])
+    #     self.assertEqual(check_other_lang(['Briathra', 'Amós', ',', 'aoire', 'de', 'chuid', 'Theacóá', '.'], lang_dictionaries['Irish']), [])
+    #     self.assertEqual(check_other_lang(['', '', '', '', ''], lang_dictionaries['Irish']), [])
+    #     self.assertEqual(check_other_lang(['Mar Seo', 'sEO', 'A', 'DeIr', 'tiarna an'], lang_dictionaries['Irish']), [0,4])
 
 if __name__ == '__main__':
     unittest.main()
