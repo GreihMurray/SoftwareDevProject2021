@@ -89,19 +89,21 @@ def appendSuggest(newWord, words, suggest):
     words     a set of acceptable words
     suggest   a list for appending newWord
     """
-    if (newWord in words or newWord[0].lower()+newWord[1:] in words) and newWord not in suggest:
-        suggest.append(newWord)
+    if len(newWord) > 1:
+        if (newWord in words or newWord[0].lower()+newWord[1:] in words) and newWord not in suggest:
+            suggest.append(newWord)
 
 class LanguageHelper:
-    def __init__(self,words):
+    def __init__(self, words, lang):
         """
         Creates a set word list to be referenced.
 
         words    a file or list of words that are defined as acceptable
         """
-        self._words = set()
-        for w in words:
-            self._words.add(w.strip())
+        self._words = []
+        self._lang = lang
+        for w in words.keys():
+            self._words.append(w.strip())
 
     def __contains__(self,query):
         """
@@ -114,7 +116,7 @@ class LanguageHelper:
         else:
             return False
 
-    def getSuggestions(self,query):
+    def getSuggestions(self, query):
         """
         Returns a list of suggestions in response to the user query.
 
@@ -125,16 +127,18 @@ class LanguageHelper:
         query    user input word
         """
         # Initial Set-Up
-        alpha = "abcdefghijklkmnopqrstuvwxyz'-"
+        alph_dict = {}
+        alph_dict['english'] = "abcdefghijklkmnopqrstuvwxyz'-"
+        alph_dict['irish'] = 'briathmósoedcuáfíglnzúépvxjyq-\''
         suggest = []
 
         # If all uppercase letters...
         if query.isupper():
-            alphaU = alpha.upper()
-            deleteChar(query,self._words,suggest)
-            addChar(query,alphaU,self._words,suggest)
-            changeChar(query,alphaU,self._words,suggest)
-            switchChar(query,self._words,suggest)
+            alphaU = self._lang.upper()
+            deleteChar(query, self._words, suggest)
+            addChar(query, alphaU, self._words, suggest)
+            changeChar(query, alphaU, self._words, suggest)
+            switchChar(query, self._words, suggest)
 
         # If first letter is uppercase...
         if query[0].isupper() and not query[1:].isupper():
@@ -144,26 +148,26 @@ class LanguageHelper:
                 fixed.append(q.lower())
             query = query[0]+''.join(fixed)
 
-            deleteChar(query,self._words,suggest)
-            addChar(query,alpha,self._words,suggest)
-            changeChar(query,alpha,self._words,suggest)
-            switchChar(query,self._words,suggest)
+            deleteChar(query, self._words, suggest)
+            addChar(query, alph_dict[self._lang], self._words, suggest)
+            changeChar(query, alph_dict[self._lang], self._words, suggest)
+            switchChar(query, self._words, suggest)
 
         # If all lowercase letters...
         if query.capitalize() in self._words:
             # quick check for uppercase version of word
-            appendSuggest(query.capitalize(),self._words,suggest)
+            appendSuggest(query.capitalize(), self._words, suggest)
 
-        deleteChar(query,self._words,suggest)
-        addChar(query,alpha,self._words,suggest)
-        changeChar(query,alpha,self._words,suggest)
-        switchChar(query,self._words,suggest)
+        deleteChar(query, self._words, suggest)
+        addChar(query, alph_dict[self._lang], self._words, suggest)
+        changeChar(query, alph_dict[self._lang], self._words, suggest)
+        switchChar(query, self._words, suggest)
 
         # Sort and return
         suggest.sort()
         return suggest
 
-    def getSuggestionsExtra(self,word):
+    def getSuggestionsExtra(self, word):
         """
         Returns a list of suggestions in response to the user query.
 
@@ -194,14 +198,3 @@ class LanguageHelper:
 
         # Return the result
         return result
-
-
-"""Changes go here"""
-with open('program7_English.txt') as words:
-    helper = LanguageHelper(words)
-    print(helper.getSuggestions('Bat'))
-    print(helper.getSuggestions('Thorn'))
-    print(helper.getSuggestions('abby'))
-    print(helper.getSuggestions("ablebodied"))
-    print(helper.getSuggestions('AAA'))
-    print(helper.getSuggestionsExtra('able'))
