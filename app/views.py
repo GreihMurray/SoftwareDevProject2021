@@ -6,7 +6,7 @@ Routing file that holds the information for the separate webpage links.
 from app import app
 from flask import render_template, request
 from .spell_check import *
-from .load_dictionaries import *
+from .context import *
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
@@ -17,31 +17,30 @@ def _fix_encoding(string):
 def about_page():
     return render_template("about.html")
 
-# Handles the index page, which contains the spellchecking system 
+# Handles the index page, which contains the spellchecking system
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
     lang_dictionaries = {}
-    lang_dictionaries["Irish"] = load_dict('cumulative_irish.csv')
+    lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
     if request.method == "POST":
         all_data = request.get_data(as_text=True)
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
+        input_list, word_list = parse_txt(TextToCheck)
         results = []
         if langSelect == "English":
-            TextToCheck_List = parse_txt(TextToCheck)
-            results = check_word(TextToCheck_List)
+            results = check_word(input_list, word_list)
         else:
-            TextToCheck_List = parse_txt_other_lang(TextToCheck)
-            results = check_other_lang(TextToCheck_List, lang_dictionaries[langSelect])
+            results = check_other_lang(input_list, word_list, lang_dictionaries[langSelect])
         print("Input Text")
         print(TextToCheck+"\n")
         print("Incorrectly Spelled Words")
         results_words = []
         recommendations = []
         for idx in results:
-            print(TextToCheck_List[idx])
-            word = TextToCheck_List[idx]
+            print(input_list[idx])
+            word = input_list[idx]
             if langSelect == 'English':
                 recommendations.append((word, word_candidates(word)))
             else:
@@ -49,13 +48,12 @@ def index_page():
                 recommendations.append((word, ''))
             print(recommendations)
         for idx in results:
-            print(TextToCheck_List[idx])
-        for i in range (0, len(TextToCheck_List)):
+            print(input_list[idx])
+        for i in range (0, len(input_list)):
             if i in results:
-                results_words.append(['Misspelled_words', TextToCheck_List[i]])
+                results_words.append(('Misspelled_words', input_list[i]))
             else:
-                results_words.append(['', TextToCheck_List[i]])
-        results_words = recombine(results_words)
+                results_words.append(('', input_list[i]))
 
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
