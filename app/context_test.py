@@ -69,6 +69,27 @@ class TestWordClass(unittest.TestCase):
         test_word.addRecommendation("bot")
         self.assertEqual(test_word.recommend, ["toy", "bot"])
 
+    def test_getContextRecs(self):
+        d = {"text": {"text": "text", "recommend": [], "instances": 1132,
+                      "context": {"the": {"of": 30, "in": 5, "on": 5, "and": 3}, "center": {"align": 79},
+                                  "from": {"bar": 15}, "been": {"has": 3}, "be": {"to": 4}, "and": {"messages": 7},
+                                  "bar": {"bar": 10, "shift": 38}, "right": {"align": 20}, "left": {"align": 30},
+                                  "text": {"bar": 40}, "Rui": {"by": 3}, "written": {"is": 4}, "a": {"as": 3},
+                                  "to": {"message": 6, "messages": 4, "refers": 3},
+                                  "images": {"and": 9, "may": 3, "messages": 16, "p": 3, "message": 13, "you": 6,
+                                             "facebook": 21, "messaged": 13, "alternatives": 5, "appears": 4, "or": 11}}},
+             "Albert": {"text": "Albert", "recommend": [], "instances": 238,
+                        "context": {"rule": {"'s": 3}, "p": {"Cesare": 3}, "Herald": {"Daily": 3}}}}
+        test_dict = {}
+        for word in d:
+            test_dict.update({word: Word(**d[word])})
+
+        self.assertEqual(test_dict["text"].getContextRecs("to", 2), [["message", 6], ["messages", 4]])
+        self.assertEqual(test_dict["text"].getContextRecs("bar", 2), [["shift", 38], ["bar", 10]])
+        self.assertEqual(test_dict["text"].getContextRecs("images", 8),
+                         [["facebook", 21], ["messages", 16], ["message", 13], ["messaged", 13], ["or", 11], ["and", 9],
+                          ["you", 6], ["alternatives", 5]])
+
     def test_loadDictionary(self):
         test_dict = loadDictionary(os.getcwd() + "/app/UnitTests/dictionary_test.json")
         self.assertEqual(test_dict["text"].context, {"the": {"of": 30, "in": 5, "on": 5, "and": 3}, "center": {"align": 79}, "from": {"bar": 15}, "been": {"has": 3}, "be": {"to": 4}, "and": {"messages": 7}, "bar": {"bar": 10, "shift": 38}, "right": {"align": 20}, "left": {"align": 30}, "text": {"bar": 40}, "Rui": {"by": 3}, "written": {"is": 4}, "a": {"as": 3}, "to": {"message": 6, "messages": 4, "refers": 3}, "images": {"and": 3}, "not": {"may": 3}, "with": {"messages": 4}, "The": {"p": 3}, "or": {"message": 3}, "see": {"you": 3}, "video": {"and": 5}, "she": {"facebook": 3}, "p": {"message": 3}, "long": {"alternatives": 3}, "within": {"appears": 4}, "email": {"or": 3}})
