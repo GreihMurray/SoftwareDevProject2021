@@ -1,6 +1,8 @@
 import unittest
-#from .spell_check import *
-from app.spell_check import *
+from .spell_check import *
+from .context import *
+#from app.spell_check import *
+#from app.context import *
 
 class TestSpellCheckMethods(unittest.TestCase):
 
@@ -37,13 +39,20 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(sort_by_count([['test', 10], ['text', 12], ['other', 8], ['thing', 40]]), [['thing', 40], ['text', 12], ['test', 10], ['other', 8]])
         self.assertEqual(sort_by_count([['test', 10], ['text', 10], ['other', 10], ['thing', 10]]), [['test', 10], ['text', 10], ['other', 10], ['thing', 10]])
 
-    # def test_check_other_langs_irish(self):
-    #     self.assertEqual(check_other_lang(['Mar', 'seo', 'a', 'deir', 'an', 'Tiarna'], lang_dictionaries['Irish']), [])
-    #     self.assertEqual(check_other_lang(['Mrtre', 'seo', 'a', 'deir', 'an', 'Tiarna'], lang_dictionaries['Irish']), [0])
-    #     self.assertEqual(check_other_lang(['martttr', 'SEO', 'adfdf', 'plopl', 'lokoil'], lang_dictionaries['Irish']), [0,2,3,4])
-    #     self.assertEqual(check_other_lang(['Briathra', 'Amós', ',', 'aoire', 'de', 'chuid', 'Theacóá', '.'], lang_dictionaries['Irish']), [])
-    #     self.assertEqual(check_other_lang(['', '', '', '', ''], lang_dictionaries['Irish']), [])
-    #     self.assertEqual(check_other_lang(['Mar Seo', 'sEO', 'A', 'DeIr', 'tiarna an'], lang_dictionaries['Irish']), [0,4])
+    def test_check_other_langs_irish(self):
+        lang_dictionaries = {}
+        lang_dictionaries['Irish'] = loadDictionary("IrishCorpus/filtered_db_output.json")
+        input_list, word_list = parse_txt('Mar seo a deir an Tiarna')
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
+        input_list, word_list = parse_txt('Mrtre seo a deir an Tiarna')
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [0])
+        input_list, word_list = parse_txt('martttr SEO adfdf plopl lokoil')
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [0, 4, 6, 8])
+        # Some words in the below test do not appear in the dict due to lack of instances. If the dictionary is updated, this may change
+        input_list, word_list = parse_txt('Briathra Amós , aoire de chuid Theacóá.')
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [2, 12])
+        input_list, word_list = parse_txt('     ')
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
 
 if __name__ == '__main__':
     unittest.main()
