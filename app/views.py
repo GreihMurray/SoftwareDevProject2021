@@ -59,6 +59,3 @@ def index_page():
 
     return render_template("index.html")
 
-@app.route('/about')
-def about():
-    return "About"
