@@ -3,32 +3,37 @@ HTML file that uses base template to create the about page for the website
 -->
 
 <!-- Inheritance from base.html -->
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %} About Page {% endblock %} {% block
+content %}
+<body>
+  <br />
+  <!-- Team Logo -->
+  <div style="text-align: center">
+    <img
+      class="mb-4"
+      src="{{ url_for('static', filename='rsz_team_pic.png') }}"
+      align="middle"
+    />
+  </div>
 
-{% block title %}
-    About Page
-{% endblock %}
-
-{% block content %}
-    <body>
-        <br>
-        <!-- Team Logo -->
-        <div style="text-align: center;">
-            <img class="mb-4" src="{{ url_for('static', filename='rsz_team_pic.png') }}" align="middle">
-        </div>
-
-        <!-- Introduction -->
-        <div class="container">
-            <h4>Welcome to the CSCI 5030 - Software Development Spellchecker</h4>
-            <p>This is a spellchecker that will allow you, the user, to input text and receive a quick,
-                accurate spell check so you can be assured that all of your writing is free of errors!</p>
-            <br>
-            <h4>How do I use it?</h4>
-            <p>To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or
-                paste the text you want to check into the textbox below. When complete, press the spell check button
-                to receive a list of words that may need corrections, or an output indicating your successful
-                spellings.</p>
-        </div>
-    </body>
+  <!-- Introduction -->
+  <div class="container">
+    <h4>Welcome to the CSCI 5030 - Software Development Spellchecker</h4>
+    <p>
+      This is a spellchecker that will allow you, the user, to input text and
+      receive a quick, accurate spell check so you can be assured that all of
+      your writing is free of errors!
+    </p>
+    <br />
+    <h4>How do I use it?</h4>
+    <p>
+      To use this tool, click your choice of language from the [dropdown/tab]
+      menu, and then type or paste the text you want to check into the textbox
+      below. When complete, press the spell check button to receive a list of
+      words that may need corrections, or an output indicating your successful
+      spellings.
+    </p>
+  </div>
+</body>
 
 {% endblock %}
