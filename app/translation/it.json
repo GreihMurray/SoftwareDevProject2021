@@ -1,0 +1,34 @@
+[
+  {
+    "o": "Welcome to the CSCI 5030 - Software Development Spellchecker",
+    "t": "Benvenuti nel CSCI 5030 - Controllo ortografico per lo sviluppo di software"
+  },
+  {
+    "o": "This is a spellchecker that will allow you, the user, to input text and receive a quick, accurate spell check so you can be assured that all of your writing is free of errors!",
+    "t": "Questo è un correttore ortografico che consentirà a te, all'utente, di inserire del testo e ricevere un controllo ortografico rapido e accurato in modo che tu possa essere certo che tutta la tua scrittura sia priva di errori!"
+  },
+  {
+    "o": "How do I use it?",
+    "t": "Come lo uso?"
+  },
+  {
+    "o": "To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or paste the text you want to check into the textbox below. When complete, press the spell check button to receive a list of words that may need corrections, or an output indicating your successful spellings.",
+    "t": "Per utilizzare questo strumento, fai clic sulla lingua che hai scelto dal menu [a discesa/scheda], quindi digita o incolla il testo che desideri controllare nella casella di testo sottostante. Al termine, premere il pulsante di controllo ortografico per ricevere un elenco di parole che potrebbero necessitare di correzioni o un output che indica l'ortografia corretta."
+  },
+  {
+    "o": "About",
+    "t": "Di"
+  },
+  {
+    "o": "Spell Checker",
+    "t": "Correttore ortografico"
+  },
+  {
+    "o": "Recommendations",
+    "t": "Raccomandazioni"
+  },
+  {
+    "o": "Spell Check",
+    "t": "Controllo ortografico"
+  }
+]
