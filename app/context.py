@@ -44,12 +44,14 @@ class Word:
 
 
     def getContextRecs(self, aftW, numRecs):
-        contextPairs = self.context[aftW]
         recs = []
-        for midW in contextPairs:
-            recs.append([midW, contextPairs[midW]])
-        sortedDictionary = sort_by_count(recs)
-        sortedDictionary = sortedDictionary[:numRecs]
+        sortedDictionary = []
+        if aftW in self.context:
+            contextPairs = self.context[aftW]
+            for midW in contextPairs:
+                recs.append([midW, contextPairs[midW]])
+            sortedDictionary = sort_by_count(recs)
+            sortedDictionary = sortedDictionary[:numRecs]
         return sortedDictionary
 
 def loadDictionary(file):

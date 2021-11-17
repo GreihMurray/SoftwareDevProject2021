@@ -3,6 +3,7 @@
 import json
 import argparse
 from create_db import *
+from spell_check import *
 
 
 parser = argparse.ArgumentParser()
