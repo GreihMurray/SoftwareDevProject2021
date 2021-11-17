@@ -1,10 +1,7 @@
-
 def deleteChar(query, words, suggest):
     """
     Function that deletes a character from a word.
-
     For each character of the query, delete the entry and send to appendSuggest for further word checking.
-
     query     original user input
     words     set of acceptable words
     suggest   list for appending newWord
@@ -18,10 +15,8 @@ def deleteChar(query, words, suggest):
 def addChar(query, alpha, words, suggest):
     """
     Function that adds a character to a word.
-
     For each character position of the query, add each entry from alpha between character entries and send to
     appendSuggest for further word checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -37,10 +32,8 @@ def addChar(query, alpha, words, suggest):
 def changeChar(query, alpha, words, suggest):
     """
     Function that changes a character in a word.
-
     For each character position of the query, change each entry using alpha and send to appendSuggest for further word
     checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -58,10 +51,8 @@ def changeChar(query, alpha, words, suggest):
 def switchChar(query, words, suggest):
     """
     Function that switches neighboring characters in a word.
-
     For each pair of characters in the query, switch the two characters and send to appendSuggest for further word
     checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -81,32 +72,30 @@ def switchChar(query, words, suggest):
 def appendSuggest(newWord, words, suggest):
     """
     Function that appends words similar to a user query to a list.
-
     If the word can be found in the set of accepted words or the lowercase version can be found there, and it already
     hasn't been added, then add the word to a new list.
-
     newWord   a new entry being checked
     words     a set of acceptable words
     suggest   a list for appending newWord
     """
-    if (newWord in words or newWord[0].lower()+newWord[1:] in words) and newWord not in suggest:
-        suggest.append(newWord)
+    if len(newWord) > 1:
+        if (newWord in words or newWord[0].lower()+newWord[1:] in words) and newWord not in suggest:
+            suggest.append(newWord)
 
 class LanguageHelper:
-    def __init__(self,words):
+    def __init__(self, words, lang):
         """
         Creates a set word list to be referenced.
-
         words    a file or list of words that are defined as acceptable
         """
-        self._words = set()
-        for w in words:
-            self._words.add(w.strip())
+        self._words = []
+        self._lang = lang
+        for w in words.keys():
+            self._words.append(w.strip())
 
     def __contains__(self,query):
         """
         Overrides the "in" conditional to return true or false if in words file from __init__.
-
         query    user input word
         """
         if query in self._words:
@@ -114,27 +103,27 @@ class LanguageHelper:
         else:
             return False
 
-    def getSuggestions(self,query):
+    def getSuggestions(self, query):
         """
         Returns a list of suggestions in response to the user query.
-
         Depending on the capitalization of the queried word, the suggestion list will return either capitalized or
         lowercase words. The words that are returned also correspond to either being one deleted character, one added
         character, one changed character, or a pair of switched characters away from the original.
-
         query    user input word
         """
         # Initial Set-Up
-        alpha = "abcdefghijklkmnopqrstuvwxyz'-"
+        alph_dict = {}
+        alph_dict['english'] = "abcdefghijklkmnopqrstuvwxyz'-"
+        alph_dict['irish'] = 'briathmósoedcuáfíglnzúépvxjyq-\''
         suggest = []
 
         # If all uppercase letters...
         if query.isupper():
-            alphaU = alpha.upper()
-            deleteChar(query,self._words,suggest)
-            addChar(query,alphaU,self._words,suggest)
-            changeChar(query,alphaU,self._words,suggest)
-            switchChar(query,self._words,suggest)
+            alphaU = self._lang.upper()
+            deleteChar(query, self._words, suggest)
+            addChar(query, alphaU, self._words, suggest)
+            changeChar(query, alphaU, self._words, suggest)
+            switchChar(query, self._words, suggest)
 
         # If first letter is uppercase...
         if query[0].isupper() and not query[1:].isupper():
@@ -144,32 +133,30 @@ class LanguageHelper:
                 fixed.append(q.lower())
             query = query[0]+''.join(fixed)
 
-            deleteChar(query,self._words,suggest)
-            addChar(query,alpha,self._words,suggest)
-            changeChar(query,alpha,self._words,suggest)
-            switchChar(query,self._words,suggest)
+            deleteChar(query, self._words, suggest)
+            addChar(query, alph_dict[self._lang], self._words, suggest)
+            changeChar(query, alph_dict[self._lang], self._words, suggest)
+            switchChar(query, self._words, suggest)
 
         # If all lowercase letters...
         if query.capitalize() in self._words:
             # quick check for uppercase version of word
-            appendSuggest(query.capitalize(),self._words,suggest)
+            appendSuggest(query.capitalize(), self._words, suggest)
 
-        deleteChar(query,self._words,suggest)
-        addChar(query,alpha,self._words,suggest)
-        changeChar(query,alpha,self._words,suggest)
-        switchChar(query,self._words,suggest)
+        deleteChar(query, self._words, suggest)
+        addChar(query, alph_dict[self._lang], self._words, suggest)
+        changeChar(query, alph_dict[self._lang], self._words, suggest)
+        switchChar(query, self._words, suggest)
 
         # Sort and return
         suggest.sort()
         return suggest
 
-    def getSuggestionsExtra(self,word):
+    def getSuggestionsExtra(self, word):
         """
         Returns a list of suggestions in response to the user query.
-
         Depending on the capitalization of the queried word, the suggestion list will return either capitalized or
         lowercase words. The words that are returned also correspond to being multiple changes away.
-
         word    user input word
         """
         # Run the getSuggestions method with the user query
@@ -194,14 +181,3 @@ class LanguageHelper:
 
         # Return the result
         return result
-
-
-"""Changes go here"""
-with open('program7_English.txt') as words:
-    helper = LanguageHelper(words)
-    print(helper.getSuggestions('Bat'))
-    print(helper.getSuggestions('Thorn'))
-    print(helper.getSuggestions('abby'))
-    print(helper.getSuggestions("ablebodied"))
-    print(helper.getSuggestions('AAA'))
-    print(helper.getSuggestionsExtra('able'))
