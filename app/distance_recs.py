@@ -113,8 +113,8 @@ class LanguageHelper:
         """
         # Initial Set-Up
         alph_dict = {}
-        alph_dict['english'] = "abcdefghijklkmnopqrstuvwxyz'-"
-        alph_dict['irish'] = 'briathmósoedcuáfíglnzúépvxjyq-\''
+        alph_dict['English'] = "abcdefghijklkmnopqrstuvwxyz'-"
+        alph_dict['Irish'] = "briathmósoedcuáfíglnzúépvxjyq-'"
         suggest = []
 
         # If all uppercase letters...
