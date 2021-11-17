@@ -14,20 +14,21 @@ HTML file that uses base template to create the about page for the website
         <br>
         <!-- Team Logo -->
         <div style="text-align: center;">
-            <img class="mb-4" src="{{ url_for('static', filename='rsz_team_pic.png') }}" align="middle">
+            <img class="mb-4" src="{{ url_for('static', filename='rsz_team_pic.png') }}" align="middle"
+                alt="Group team name">
         </div>
 
         <!-- Introduction -->
-        <div class="container">
-            <h4>Welcome to the CSCI 5030 - Software Development Spellchecker</h4>
-            <p>This is a spellchecker that will allow you, the user, to input text and receive a quick,
-                accurate spell check so you can be assured that all of your writing is free of errors!</p>
+        <div class="container" style="text-align: center; padding-left: 5%; padding-right: 5%">
+            <h1>Welcome to the CSCI 5030 - Software Development Spellchecker</h1>
+            <h4>This is a spellchecker that will allow you, the user, to input text and receive a quick,
+                accurate spell check so you can be assured that all of your writing is free of errors!</h4>
             <br>
-            <h4>How do I use it?</h4>
-            <p>To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or
+            <h2>How do I use it?</h2>
+            <h4>To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or
                 paste the text you want to check into the textbox below. When complete, press the spell check button
                 to receive a list of words that may need corrections, or an output indicating your successful
-                spellings.</p>
+                spellings.</h4>
         </div>
     </body>
 
