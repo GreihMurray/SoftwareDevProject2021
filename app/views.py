@@ -22,43 +22,16 @@ def about_page():
 def index_page():
     lang_dictionaries = {}
     lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
+    lang_dictionaries["English"] = loadDictionary('EnglishCorpus/Filtered_English_Dict.json')
     if request.method == "POST":
         all_data = request.get_data(as_text=True)
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
-        input_list, word_list = parse_txt(TextToCheck)
-        results = []
-        if langSelect == "English":
-            results = check_word(input_list, word_list)
-        else:
-            results = check_other_lang(input_list, word_list, lang_dictionaries[langSelect])
-        print("Input Text")
-        print(TextToCheck+"\n")
-        print("Incorrectly Spelled Words")
-        results_words = []
-        recommendations = []
-        for idx in results:
-            print(input_list[idx])
-            word = input_list[idx]
-            if langSelect == 'English':
-                recommendations.append((word, word_candidates(word)))
-            else:
-                print("Add other lang recommendations")
-                recommendations.append((word, ''))
-            print(recommendations)
-        for idx in results:
-            print(input_list[idx])
-        for i in range (0, len(input_list)):
-            if i in results:
-                results_words.append(('Misspelled_words', input_list[i]))
-            else:
-                results_words.append(('', input_list[i]))
+
+        input_list, word_list, results_words, recommendations = logicCntrl(TextToCheck, langSelect, lang_dictionaries)
 
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
 
-@app.route('/about')
-def about():
-    return "About"
