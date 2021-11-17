@@ -1,8 +1,7 @@
 import unittest
 from .spell_check import *
 from .context import loadDictionary
-#from app.context import loadDictionary
-#from app.spell_check import *
+
 
 class TestSpellCheckMethods(unittest.TestCase):
 

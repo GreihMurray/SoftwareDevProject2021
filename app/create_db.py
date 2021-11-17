@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import unicodedata
 import regex
 from munch import DefaultMunch
