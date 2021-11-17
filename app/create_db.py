@@ -1,4 +1,3 @@
-import regex
 import unicodedata
 import regex
 from munch import DefaultMunch
