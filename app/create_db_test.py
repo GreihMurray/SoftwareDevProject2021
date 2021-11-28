@@ -19,7 +19,7 @@ class TestCreateDBMethods(unittest.TestCase):
                          ['an','email', 'address'])
 
     def test_assembleDB(self):
-        test_db = assembleDB(['here', 'is', 'a', 'sentence', 'there', 'are', 'repeats', 'this', 'is', 'a', 'test'])
+        test_db = assembleDB(['here', 'is', 'a', 'sentence', 'there', 'are', 'repeats', 'this', 'is', 'a', 'test'], {})
         self.assertEqual({'a': {'is': 1}}, test_db['here'].context)
         self.assertEqual(1, test_db['here'].instances)
         self.assertEqual({'sentence': {'a': 1}, 'test': {'a': 1}}, test_db['is'].context)
@@ -29,7 +29,7 @@ class TestCreateDBMethods(unittest.TestCase):
     def test_filterDB(self):
         test_db = assembleDB(['here', 'is', 'a', 'sentence', 'there', 'are', 'repeats', 'this', 'is', 'a', 'test',
                               'we', 'want', 'there', 'to', 'be', 'repeat', 'sentence', 'so', 'that', 'there', 'can',
-                              'be', 'a', 'test', 'it', 'is', 'a', 'test', 'there', 'to', 'be'])
+                              'be', 'a', 'test', 'it', 'is', 'a', 'test', 'there', 'to', 'be'], {})
         filterDB(test_db, 2, 2)
         self.assertEqual({'test': {'a': 2}}, test_db['is'].context)
         self.assertEqual(3, test_db['is'].instances)
