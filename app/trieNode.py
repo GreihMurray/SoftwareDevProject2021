@@ -55,8 +55,8 @@ def get_words(word, letter, curr_node, prev_row, max_dist, results):
 
         curr_row.append(min(insert_dist, delete_dist, replace_dist))
 
-    if curr_row[-1] <= max_dist and curr_node.word != "":
-        results.append((curr_node.word, curr_row[-1]))
+    if curr_row[-1] <= max_dist and curr_node.word != "" and curr_node.word != word:
+        results.append(curr_node.word)
 
     if min(curr_row) <= max_dist:
         for letter in curr_node.children:

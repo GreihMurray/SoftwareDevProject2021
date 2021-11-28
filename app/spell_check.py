@@ -1,6 +1,6 @@
 import unicodedata
 
-from spellchecker import SpellChecker
+from .spellchecker import SpellChecker
 from .distance_recs import *
 import regex
 

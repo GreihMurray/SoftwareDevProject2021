@@ -13,5 +13,5 @@ class TestTrieNode(unittest.TestCase):
     def test_get_recs(self):
         word_array = ["bad", "band", "sad", "fruit", "orange", "bass", "said", "bed", "sand", "play", "ball", "hello"]
         test_trie = load_word_list(word_array)
-        self.assertEqual([("bad", 1)], edit_distance(test_trie, "bat", 1))
-        self.assertEqual([("bad", 1), ("band", 2), ("bass", 2), ("ball", 2), ("bed", 2), ("sad", 2)], edit_distance(test_trie, "bat", 2))
+        self.assertEqual(["bad"], edit_distance(test_trie, "bat", 1))
+        self.assertEqual(["bad", "band", "bass", "ball", "bed", "sad"], edit_distance(test_trie, "bat", 2))

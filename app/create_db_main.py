@@ -2,8 +2,8 @@
 
 import json
 import argparse
-from create_db import *
-from spell_check import *
+from .create_db import *
+from .spell_check import *
 
 
 parser = argparse.ArgumentParser()
@@ -12,6 +12,11 @@ parser.add_argument('-d', metavar='CreateDictionary', nargs='+', help='Create di
                                                                       'optional initialized dictionary. If initialized'
                                                                       'dictionary is given then no new words will be added'
                                                                       'only context to existing words.')
+parser.add_argument('-s', metavar='StandardContext', default=True, help='Determine whether context will be stored in the'
+                                                                        'standard form befW -> {aftW: {midW: #}} used '
+                                                                        'when running the tool or non-standard '
+                                                                        'midW -> {befW: {aftW: #}} used when building '
+                                                                        'the triples. Defaults to True')
 parser.add_argument('-i', metavar='InitializeDictionary', help='Create dictionary with given file of words.')
 parser.add_argument('-f', metavar='FilterDictionary', nargs='+', help="Filter given dictionary based on given values (i.e. -f 'filename' minInstances"
                                           "minContextInstances")
@@ -65,7 +70,7 @@ if args.d:
     else:
         init_db = {}
 
-    db = assembleDB(wordArray, init_db)
+    db = assembleDB(wordArray, init_db, args.s)
 
     db_dict = db_to_dict(db)
 
