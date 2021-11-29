@@ -7,6 +7,14 @@ from app import app
 from flask import render_template, request
 from .spell_check import *
 from .context import *
+from flask_babel import Babel
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    return 'ga'
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')

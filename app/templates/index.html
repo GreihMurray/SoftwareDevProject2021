@@ -13,11 +13,11 @@ HTML file that uses base template to create specific page for textbox editor
 
         <!-- Sidebar navigation container -->
         <div class="container" style="text-align:center">
-            <h2>Spellchecking System: Click on the language selection tool to open the menu of supported languages.</h2>
-            <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; Language Select</span>
+            <h2>{{ _('Spellchecking System: Click on the language selection tool to open the menu of supported languages.') }}</h2>
+            <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; {{ _('Language Select') }}</span>
             <br>
-            <p style="display:inline-block">Current language:</p>
-            <p style="display:inline-block; padding-left: 0.25%" id="Language">None Selected</p>
+            <p style="display:inline-block">{{ _('Current language:') }}</p>
+            <p style="display:inline-block; padding-left: 0.25%" id="Language">{{ _('None Selected') }}</p>
         </div>
 
         <script>
@@ -27,9 +27,9 @@ HTML file that uses base template to create specific page for textbox editor
 
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a>Languages:</a>
-            <a onclick="lang_select('English')">English</a>
-            <a onclick="lang_select('Irish')">Irish</a>
+            <a>{{ _('Languages:') }}</a>
+            <a onclick="lang_select('English')">{{ _('English') }}</a>
+            <a onclick="lang_select('Irish')">{{ _('Irish') }}</a>
         </div>
 
         <style>
@@ -47,15 +47,15 @@ HTML file that uses base template to create specific page for textbox editor
 
         <!-- Textbox descriptions -->
         <br>
-        <p style="text-align: left; padding-left: 10%;">Input Text:
-            <span style="float:right; padding-right:41%;">Recommendations:</span>
+        <p style="text-align: left; padding-left: 10%;">{{ _('Input Text:') }}
+            <span style="float:right; padding-right:41%;">{{ _('Recommendations:') }}</span>
         </p>
 
         <!-- Textbox container -->
         <div class="container">
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
-                <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">English</textarea>
+                <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">{{ _('English') }}</textarea>
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
                     {% for word in misspelled_words%}
                         {%if word[1] != ' '%}
@@ -88,7 +88,7 @@ HTML file that uses base template to create specific page for textbox editor
 
                 <br>
 
-                <button type="submit" style="margin:0; position:absolute; left:47.5%;">Spell Check</button>
+                <button type="submit" style="margin:0; position:absolute; left:47.5%;">{{ _('Spell Check') }}</button>
 
             </form>
         </div>

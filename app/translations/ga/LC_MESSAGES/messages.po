@@ -1,0 +1,101 @@
+# Irish translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-11-28 21:13-0600\n"
+"PO-Revision-Date: 2021-11-28 21:13-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ga\n"
+"Language-Team: ga <LL@li.org>\n"
+"Plural-Forms: nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n>=3 && n<=6 ? 2 "
+": n>=7 && n<=10 ? 3 : 4)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: app/templates/about.html:23
+msgid "Welcome to the CSCI 5030 - Software Development Spellchecker"
+msgstr ""
+"Fáilte chuig an CSCI 5030 - Litritheoir Forbartha Bogearraí"
+
+#: app/templates/about.html:24
+msgid ""
+"This is a spellchecker that will allow you, the user, to input text and "
+"receive a quick, accurate spell check so you can be assured that all of "
+"your writing is free of errors!"
+msgstr ""
+"Seiceálaí litrithe é seo a ligfidh duit, don úsáideoir, téacs a ionchur agus seiceáil litrithe tapa, cruinn a fháil ionas gur féidir leat a bheith cinnte go bhfuil do chuid scríbhneoireachta go léir saor ó earráidí!"
+
+#: app/templates/about.html:26
+msgid "How do I use it?"
+msgstr ""
+"Conas a úsáidim é?"
+
+#: app/templates/about.html:27
+msgid ""
+"To use this tool, click your choice of language from the menu, and then "
+"type or paste the text you want to check into the textbox below.\n"
+"                When complete, press the spell check button to receive a "
+"list of words that may need corrections, or an output indicating your "
+"successful spellings."
+msgstr ""
+"Chun an uirlis seo a úsáid, cliceáil do rogha teanga ón roghchlár, agus ansin clóscríobh nó greamaigh an téacs a theastaíonn uait a sheiceáil isteach sa bhosca téacs thíos.\n"
+"Nuair a bheidh sé críochnaithe, brúigh an cnaipe seiceála litrithe chun liosta focal a fháil a bhféadfadh ceartúcháin a bheith ag teastáil uathu, nó aschur a léiríonn do litriú rathúil."
+
+#: app/templates/base.html:31
+msgid "About"
+msgstr "Faoi"
+
+#: app/templates/base.html:34
+msgid "Spellchecker"
+msgstr "Litritheoir"
+
+#: app/templates/index.html:16
+msgid ""
+"Spellchecking System: Click on the language selection tool to open the "
+"menu of supported languages."
+msgstr ""
+"Córas Seiceála Litrithe: Cliceáil ar an uirlis roghnaithe teanga chun roghchlár na dteangacha tacaithe a oscailt."
+
+#: app/templates/index.html:17
+msgid "Language Select"
+msgstr "Roghnaigh Teanga"
+
+#: app/templates/index.html:19
+msgid "Current language:"
+msgstr "Teanga reatha:"
+
+#: app/templates/index.html:20
+msgid "None Selected"
+msgstr "Níor roghnaíodh aon cheann"
+
+#: app/templates/index.html:30
+msgid "Languages:"
+msgstr "Teangacha:"
+
+#: app/templates/index.html:31 app/templates/index.html:58
+msgid "English"
+msgstr "Béarla"
+
+#: app/templates/index.html:32
+msgid "Irish"
+msgstr "Gaeilge"
+
+#: app/templates/index.html:50
+msgid "Input Text:"
+msgstr "Téacs Ionchuir:"
+
+#: app/templates/index.html:51
+msgid "Recommendations:"
+msgstr "Moltaí:"
+
+#: app/templates/index.html:91
+msgid "Spell Check"
+msgstr "Seiceáil Litrithe"
+
