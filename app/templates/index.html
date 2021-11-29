@@ -28,8 +28,8 @@ HTML file that uses base template to create specific page for textbox editor
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a>{{ _('Languages:') }}</a>
-            <a onclick="lang_select('English')">{{ _('English') }}</a>
-            <a onclick="lang_select('Irish')">{{ _('Irish') }}</a>
+            <a onclick="lang_select(this)">{{ _('English') }}</a>
+            <a onclick="lang_select(this)">{{ _('Irish') }}</a>
         </div>
 
         <style>
@@ -140,8 +140,9 @@ HTML file that uses base template to create specific page for textbox editor
             }
         }
 
-        function lang_select(word){
-            console.log(word);
+        function lang_select(obj){
+            console.log($(obj).text());
+            word = $(obj).text();
             document.querySelector("#Language").innerHTML = word;
             document.getElementById("LangSelectTextArea").innerHTML = word;
         }
