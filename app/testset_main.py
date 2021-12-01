@@ -109,10 +109,18 @@ for idx, word in enumerate(word_list):
         #         retVal.append([word, context_recs[0][0]])
         #     else:
         #         retVal.append([word, word])
-        elif lower_word in error_model:
+        elif lower_word in error_model and (toLower(word_list[idx - 1]) in test_dictDB) and (toLower(word_list[idx + 1]) in test_dictDB):
             context_error += 1
-            recs = error_model[lower_word]
-            retVal.append([word, recs[0][0]])
+            context_recs = test_dictDB[toLower(word_list[idx - 1])].getContextRecs(toLower(word_list[idx + 1]), 1)
+            if lower_word not in context_recs and len(context_recs) != 0:
+                recs = error_model[lower_word]
+                if recs[0][1] > context_recs[0][1]:
+                    retVal.append([word, recs[0][0]])
+                else:
+                    retVal.append([word, context_recs[0][0]])
+            else:
+                context_error -= 1
+                retVal.append([word, word])
         else:
             retVal.append([word, word])
 
