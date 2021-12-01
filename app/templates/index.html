@@ -17,7 +17,7 @@ HTML file that uses base template to create specific page for textbox editor
             <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; {{ _('Language Select') }}</span>
             <br>
             <p style="display:inline-block">{{ _('Current language:') }}</p>
-            <p style="display:inline-block; padding-left: 0.25%" id="Language">{{ _('None Selected') }}</p>
+            <p style="display:inline-block; padding-left: 0.25%" id="Language">{{ _('English') }}</p>
         </div>
 
         <script>
@@ -28,8 +28,8 @@ HTML file that uses base template to create specific page for textbox editor
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a>{{ _('Languages:') }}</a>
-            <a onclick="lang_select(this)">{{ _('English') }}</a>
-            <a onclick="lang_select(this)">{{ _('Irish') }}</a>
+            <a onclick="lang_select(this); closeNav();">{{ _('English') }}</a>
+            <a onclick="lang_select(this); closeNav();">{{ _('Irish') }}</a>
         </div>
 
         <style>
