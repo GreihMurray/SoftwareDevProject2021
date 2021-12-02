@@ -95,25 +95,6 @@ Other pages inherit from this file for simplicity.
 {#        {% endfor %}#}
 
         function site_lang(lang){
-            {#console.log(langu);#}
-            {#console.log(langu === "en")#}
-            {#{% set langu =  %}#}
-            {#if(langu === "ga"){#}
-            {#    {% set x = session.__setitem__('language', 'ga') %}#}
-            {#    console.log(langu + "GGGG");#}
-            {# }#}
-            {#else{#}
-            {#    {% set x = session.__setitem__('language', 'en') %}#}
-            {#    console.log(langu + "SSSS");#}
-            {# }#}
-            {#if(langu === "en"){#}
-            {#    {% set x = session.__setitem__('language', 'en') %}#}
-            {#    console.log(langu + "SSSS");#}
-            {# }#}
-
-
-            //location.reload();
-
             var data = [{'language': lang}]
 
             $.ajax({
@@ -123,11 +104,13 @@ Other pages inherit from this file for simplicity.
               contentType: "application/json",
               dataType: 'json',
               success: function(result) {
-                  console.log(result);
+                  console.log("THING" + result);
+                  setTimeout(function(){
+                    location.reload();
+                  }, 200);
+
               }
             });
-
-            location.reload();
         }
     </script>
 

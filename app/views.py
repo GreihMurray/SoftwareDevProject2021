@@ -17,6 +17,7 @@ def get_locale():
     try:
         lang = session['language']
     except KeyError:
+        print('KEY')
         lang = 'en'
 
     return lang
@@ -33,7 +34,6 @@ def about_page():
 # Handles the index page, which contains the spellchecking system 
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
-    [session.pop(key) for key in list(session.keys())]
     lang_dictionaries = {}
     lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
     lang_dictionaries["English"] = loadDictionary('EnglishCorpus/Filtered_English_Dict.json')
@@ -54,6 +54,8 @@ def process_lang():
     if request.method == "POST":
         page_lang = request.get_json()
         session['language'] = page_lang[0]['language']
+        print(page_lang)
+        print(session['language'])
 
     results = {'processed': 'true'}
     return jsonify(results)
