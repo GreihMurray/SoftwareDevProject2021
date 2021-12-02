@@ -3,6 +3,8 @@ HTML file that is used as a base template for all other html applications.
 Other pages inherit from this file for simplicity.
 -->
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,8 +39,8 @@ Other pages inherit from this file for simplicity.
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#" name="en">{{ _('English') }}</a>
-                    <a href="#" name="ga">{{ _('Irish') }}</a>
+                    <a href="#" name="en" id="en" onclick="site_lang('en')">{{ _('English') }}</a>
+                    <a href="#" name="ga" onclick="site_lang('ga')">{{ _('Irish') }}</a>
                 </div>
             </div>
         </div>
@@ -76,14 +78,62 @@ Other pages inherit from this file for simplicity.
         </style>
     </body>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"#}
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                crossorigin="anonymous">
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+
     <script>
-        {% for language in AVAILABLE_LANGUAGES.items() %}
-             {% if CURRENT_LANGUAGE == language[0] %}
-                 {{ language[1] }}
-             {% else %}
-                 <a href="{{ url_for('set_language', language=language[0]) }}" >{{ language[1] }}</a>
-             {%  endif %}
-        {% endfor %}
+{#        {% for language in AVAILABLE_LANGUAGES.items() %}#}
+{#             {% if CURRENT_LANGUAGE == language[0] %}#}
+{#                 {{ language[1] }}#}
+{#             {% else %}#}
+{#                 <a href="{{ url_for('set_language', language=language[0]) }}" >{{ language[1] }}</a>#}
+{#             {%  endif %}#}
+{#        {% endfor %}#}
+
+        function site_lang(lang){
+            {#console.log(langu);#}
+            {#console.log(langu === "en")#}
+            {#{% set langu =  %}#}
+            {#if(langu === "ga"){#}
+            {#    {% set x = session.__setitem__('language', 'ga') %}#}
+            {#    console.log(langu + "GGGG");#}
+            {# }#}
+            {#else{#}
+            {#    {% set x = session.__setitem__('language', 'en') %}#}
+            {#    console.log(langu + "SSSS");#}
+            {# }#}
+            {#if(langu === "en"){#}
+            {#    {% set x = session.__setitem__('language', 'en') %}#}
+            {#    console.log(langu + "SSSS");#}
+            {# }#}
+
+
+            //location.reload();
+
+            var data = [{'language': lang}]
+
+            $.ajax({
+              type: "POST",
+              url: "/process_lang",
+              data: JSON.stringify(data),
+              contentType: "application/json",
+              dataType: 'json',
+              success: function(result) {
+                  console.log(result);
+              }
+            });
+
+            location.reload();
+        }
     </script>
 
 </html>
+
+<?php
+// Start the session
+    exit();
+?>

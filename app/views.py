@@ -4,7 +4,7 @@ Routing file that holds the information for the separate webpage links.
 """
 
 from app import app
-from flask import render_template, request
+from flask import render_template, request, session, jsonify
 from .spell_check import *
 from .context import *
 from flask_babel import Babel
@@ -14,7 +14,12 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
-    return 'ga'
+    try:
+        lang = session['language']
+    except KeyError:
+        lang = 'en'
+
+    return lang
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
@@ -28,6 +33,7 @@ def about_page():
 # Handles the index page, which contains the spellchecking system 
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
+    [session.pop(key) for key in list(session.keys())]
     lang_dictionaries = {}
     lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
     lang_dictionaries["English"] = loadDictionary('EnglishCorpus/Filtered_English_Dict.json')
@@ -42,4 +48,13 @@ def index_page():
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
+
+@app.route('/process_lang', methods=['GET', 'POST'])
+def process_lang():
+    if request.method == "POST":
+        page_lang = request.get_json()
+        session['language'] = page_lang[0]['language']
+
+    results = {'processed': 'true'}
+    return jsonify(results)
 
