@@ -4,12 +4,18 @@ Routing file that holds the information for the separate webpage links.
 """
 
 from app import app
-from flask import render_template, request
+from flask import render_template, request, send_from_directory
 from .spell_check import *
 from .context import *
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
+
+# Translation folder connection
+@app.route("/translation/<path:filename>")
+def lang_folder(filename):
+    print(filename)
+    return send_from_directory("./translation/", filename)
 
 # Handles the about page with basic information about how to use the spell checker
 @app.route('/')

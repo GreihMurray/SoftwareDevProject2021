@@ -1,0 +1,54 @@
+[
+  {
+    "o": "Welcome to the CSCI 5030 - Software Development Spellchecker",
+    "t": "Bienvenido a CSCI 5030 - Corrector ortográfico de desarrollo de software"
+  },
+  {
+    "o": "This is a spellchecker that will allow you, the user, to input text and receive a quick, accurate spell check so you can be assured that all of your writing is free of errors!",
+    "t": "Este es un corrector ortográfico que le permitirá a usted, el usuario, ingresar texto y recibir un corrector ortográfico rápido y preciso para que pueda estar seguro de que toda su escritura está libre de errores."
+  },
+  {
+    "o": "How do I use it?",
+    "t": "¿Como lo uso?"
+  },
+  {
+    "o": "To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or paste the text you want to check into the textbox below. When complete, press the spell check button to receive a list of words that may need corrections, or an output indicating your successful spellings.",
+    "t": "Para usar esta herramienta, haga clic en el idioma que elija en el menú [desplegable / pestaña] y luego escriba o pegue el texto que desea verificar en el cuadro de texto a continuación. Cuando termine, presione el botón de revisión ortográfica para recibir una lista de palabras que pueden necesitar correcciones, o una salida que indique su ortografía correcta."
+  },
+  {
+    "o": "About",
+    "t": "Sobre"
+  },
+  {
+    "o": "Spellchecker",
+    "t": "Corrector ortográfico"
+  },
+  {
+    "o": "Recommendations:",
+    "t": "Recomendaciones:"
+  },
+  {
+    "o": "Spell Check",
+    "t": "Corrector ortográfico"
+  },
+  {
+    "o": "Input Text:",
+    "t": "Texto de entrada:"
+  },
+  {
+    "o": "Spellchecking System: Click on the language selection tool to open the menu of supported languages.",
+    "t": "Sistema de revisión ortográfica: haga clic en la herramienta de selección de idioma para abrir el menú de idiomas admitidos."
+  },
+  {
+    "o": "☰ Language Select",
+    "t": "☰ Seleccionar idioma"
+  },
+  {
+    "o": "Current language:",
+    "t": "Idioma actual:"
+  },
+  {
+    "o": "None Selected",
+    "t": "Ninguna seleccionada"
+  }
+]

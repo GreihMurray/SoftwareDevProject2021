@@ -1,0 +1,58 @@
+[
+  {
+    "o": "Welcome to the CSCI 5030 - Software Development Spellchecker",
+    "t": "Fáilte chuig an CSCI 5030 - Litritheoir Forbartha Bogearraí"
+  },
+  {
+    "o": "This is a spellchecker that will allow you, the user, to input text and receive a quick, accurate spell check so you can be assured that all of your writing is free of errors!",
+    "t": "Seiceálaí litrithe é seo a ligfidh duit, don úsáideoir, téacs a ionchur agus seiceáil litrithe tapa, cruinn a fháil ionas gur féidir leat a bheith cinnte go bhfuil do chuid scríbhneoireachta go léir saor ó earráidí!"
+  },
+  {
+    "o": "How do I use it?",
+    "t": "Conas a úsáidim é?"
+  },
+  {
+    "o": "To use this tool, click your choice of language from the [dropdown/tab] menu, and then type or paste the text you want to check into the textbox below. When complete, press the spell check button to receive a list of words that may need corrections, or an output indicating your successful spellings.",
+    "t": "Chun an uirlis seo a úsáid, cliceáil do rogha teanga ón roghchlár [anuas / cluaisín], agus ansin clóscríobh nó greamaigh an téacs a theastaíonn uait a sheiceáil isteach sa bhosca téacs thíos. Nuair a bheidh sé críochnaithe, brúigh an cnaipe seiceála litrithe chun liosta focal a fháil a bhféadfadh ceartúcháin a bheith ag teastáil uathu, nó aschur a léiríonn do litriú rathúil."
+  },
+  {
+    "o": "About",
+    "t": "Faoi"
+  },
+  {
+    "o": "Spellchecker",
+    "t": "Litritheoir"
+  },
+  {
+    "o": "Recommendations:",
+    "t": "Moltaí:"
+  },
+  {
+    "o": "Spell Check",
+    "t": "Seiceáil Litrithe"
+  },
+  {
+    "o": "Input Text:",
+    "t": "Téacs Ionchuir:"
+  },
+  {
+    "o": "Spellchecking System: Click on the language selection tool to open the menu of supported languages.",
+    "t": "Córas Seiceála Litrithe: Cliceáil ar an uirlis roghnaithe teanga chun roghchlár na dteangacha tacaithe a oscailt."
+  },
+  {
+    "o": "☰ Language Select",
+    "t": "☰ Roghnaigh Teanga"
+  },
+  {
+    "o": "Current language:",
+    "t": "Teanga reatha:"
+  },
+  {
+    "o": "None Selected",
+    "t": "Níor roghnaíodh aon chean"
+  },
+  {
+    "o": "Beta: v0.5",
+    "t": "Béite: v0.5"
+  }
+]
