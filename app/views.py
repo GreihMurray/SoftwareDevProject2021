@@ -4,9 +4,23 @@ Routing file that holds the information for the separate webpage links.
 """
 
 from app import app
-from flask import render_template, request
+from flask import render_template, request, session, jsonify
 from .spell_check import *
 from .context import *
+from flask_babel import Babel
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    try:
+        lang = session['language']
+    except KeyError:
+        print('KEY')
+        lang = 'en'
+
+    return lang
 
 def _fix_encoding(string):
     return string.encode('iso-8859-1').decode('utf8')
@@ -34,4 +48,15 @@ def index_page():
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
+
+@app.route('/process_lang', methods=['GET', 'POST'])
+def process_lang():
+    if request.method == "POST":
+        page_lang = request.get_json()
+        session['language'] = page_lang[0]['language']
+        print(page_lang)
+        print(session['language'])
+
+    results = {'processed': 'true'}
+    return jsonify(results)
 
