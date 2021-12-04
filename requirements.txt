@@ -12,3 +12,5 @@ pytest==6.2.5
 pyspellchecker==0.6.2
 munch == 2.5.0
 regex == 2021.11.10
+selenium==4.1.0
+requests==2.26.0
