@@ -3,7 +3,9 @@ import os, json
 
 
 class ErrorModel():
-    def __init__(self, letter_pairs={}):
+    def __init__(self, letter_pairs=None):
+        if letter_pairs is None:
+            letter_pairs = {}
         self.letter_pairs = letter_pairs
         self.total_pairs = 0
 

@@ -27,4 +27,4 @@ class TestSpellCheckMethods(unittest.TestCase):
         test_model.updt_lps(
             [["e", "e"], ["w", "w"], ["e", ""], ["a", "e"], ["e", "w"], ["", "b"], ["w", "w"], ["a", "a"]])
         self.assertEqual(test_model.rec_list("wee", 0.245, [["we", 0.321], ["web", 0.5], ["bee", 0.4]]),
-                         [["wee", "wee", 0.245], ["we", "wee", 0.0713], ["web", "wee", 0.0],  ["bee", "wee", 0.0]])
+                         [["wee", "wee", 0.245], ["we", "wee", 0.0713]])
