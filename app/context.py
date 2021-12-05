@@ -1,16 +1,17 @@
 import math
-
+import json
+from .spell_check import sort_by_count
+import os
 
 class Word:
-    def __init__(self, text="", aftW="", midW=""):
+    def __init__(self, text="", recommend=[], instances=0, context={}):
         self.text = text
-        self.recommend = []
-        if text == "":
-            self.instances = 0
-            self.context = {}
-        else:
+        self.recommend = recommend
+        if instances == 0 and text != "":
             self.instances = 1
-            self.context = {aftW: {midW: 1}}
+        else:
+            self.instances = instances
+        self.context = context
 
     def setText(self, inArg):
         self.text = inArg
@@ -40,3 +41,28 @@ class Word:
         else:
             self.context = {aftW: {midW: 1}}
         return
+
+
+    def getContextRecs(self, aftW, numRecs):
+        recs = []
+        sortedDictionary = []
+        if aftW in self.context:
+            contextPairs = self.context[aftW]
+            for midW in contextPairs:
+                recs.append([midW, contextPairs[midW]])
+            sortedDictionary = sort_by_count(recs)
+            sortedDictionary = sortedDictionary[:numRecs]
+        return sortedDictionary
+
+def loadDictionary(file):
+    here = os.path.dirname(os.path.abspath(__file__))
+    filename = os.path.join(here, file)
+    f = open(filename, encoding='utf-8')
+    text = f.read()
+    f.close()
+
+    db_dict = json.loads(text)
+    filtDictionary = {}
+    for word in db_dict:
+        filtDictionary.update({word: Word(**db_dict[word])})
+    return filtDictionary

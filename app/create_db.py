@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-
-import re
+import unicodedata
+import regex
 from munch import DefaultMunch
 
 from .spell_check import *
@@ -9,22 +8,41 @@ from .context import Word
 def saveCharWords(rawArray, words):
     wordArray = []
     for i in words:
-        if not re.search(r'[^a-zA-Z\']', rawArray[i]):
-            wordArray.append(rawArray[i])
+        if not regex.search(r'([^\p{L}\'\-])', rawArray[i]):
+            wordArray.append(str(unicodedata.normalize('NFC', rawArray[i])).lower())
     return wordArray
 
-def assembleDB(wordArray):
+def initDB(wordArray):
     db = {}
+    for word in wordArray:
+        tmp_word = Word(word)
+        tmp_word.setInstances(0)
+        db.update({word: tmp_word})
+    return db
+
+def assembleDB(wordArray, db):
+    # ** Uncomment this code if you want to only use wordArray for adding context
+    #    and have already added all 'real' words to the db **
+    # if db != {}:
+    #     for i, word in enumerate(wordArray):
+    #         if i+2 < len(wordArray) and word in db:
+    #             if word in db:
+    #                 db[word].addContext(wordArray[i + 2], wordArray[i + 1])
+    #         elif i+1 < len(wordArray) and word in db:
+    #             db[word].addContext('', wordArray[i + 1])
+    #         elif word in db:
+    #             db[word].incrmtInstances()
+    # else:
     for i, word in enumerate(wordArray):
         if i+2 < len(wordArray):
             if word in db:
                 db[word].addContext(wordArray[i + 2], wordArray[i + 1])
             else:
-                db.update({word: Word(word, wordArray[i + 2], wordArray[i + 1])})
+                db.update({word: Word(word, context={wordArray[i + 2]: {wordArray[i + 1]: 1}})})
         elif i+1 < len(wordArray) and not isinstance(word, Word):
-            db.update({word: Word(word, '', wordArray[i + 1])})
+            db.update({word: Word(word, context={'': {wordArray[i + 1]: 1}})})
         elif not isinstance(word, Word):
-            db.update({word: Word(word, '', '')})
+            db.update({word: Word(word)})
     return db
 
 def filterDB(db, minInstances, minConstantInst):
@@ -42,11 +60,12 @@ def filterDB(db, minInstances, minConstantInst):
 def db_to_dict(db):
     db_dict = {}
     for key in db:
-        db_dict[key] = db[key].__dict__
+        db_dict.update({key: vars(db[key])})
+        #db_dict[key] = db[key].__dict__
     return db_dict
 
 def dict_to_db(dict_db):
     db = {}
     for word in dict_db:
-        db[word] = DefaultMunch.fromDict(dict_db[word])
+        db.update({word: Word(**dict_db[word])})
     return db

@@ -2,9 +2,28 @@
 Routing file that holds the information for the separate webpage links.
 /index: main page for the spellchecker
 """
+
 from app import app
-from flask import render_template, request
+from flask import render_template, request, session, jsonify
 from .spell_check import *
+from .context import *
+from flask_babel import Babel
+
+app.config['BABEL_DEFAULT_LOCALE'] = 'en'
+babel = Babel(app)
+
+@babel.localeselector
+def get_locale():
+    try:
+        lang = session['language']
+    except KeyError:
+        print('KEY')
+        lang = 'en'
+
+    return lang
+
+def _fix_encoding(string):
+    return string.encode('iso-8859-1').decode('utf8')
 
 # Handles the about page with basic information about how to use the spell checker
 @app.route('/')
@@ -15,34 +34,28 @@ def about_page():
 # Handles the index page, which contains the spellchecking system 
 @app.route('/index', methods=['GET', 'POST'])
 def index_page():
+    lang_dictionaries = {}
+    lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
+    lang_dictionaries["English"] = loadDictionary('EnglishCorpus/Filtered_English_Dict.json')
     if request.method == "POST":
+        all_data = request.get_data(as_text=True)
         langSelect = request.form.get("LangSelect")
         print("Selected Language: ", langSelect)
         TextToCheck = request.form.get("TextToCheck")
-        input_list, word_list = parse_txt(TextToCheck)
-        results = check_word(input_list, word_list)
-        print("Input Text")
-        print(TextToCheck+"\n")
-        print("Incorrectly Spelled Words")
-        results_words = []
-        recommendations = []
-        for idx in results:
-            print(input_list[idx])
-            word = input_list[idx]
-            recommendations.append((word, word_candidates(word)))
-            print(recommendations)
-        for idx in results:
-            print(input_list[idx])
-        for i in range (0, len(input_list)):
-            if i in results:
-                results_words.append(('Misspelled_words', input_list[i]))
-            else:
-                results_words.append(('', input_list[i]))
+
+        input_list, word_list, results_words, recommendations = logicCntrl(TextToCheck, langSelect, lang_dictionaries)
 
         return render_template("index.html", misspelled_words=results_words, recommendations=recommendations, langSelect=langSelect)
 
     return render_template("index.html")
 
-@app.route('/about')
-def about():
-    return "About"
+@app.route('/process_lang', methods=['GET', 'POST'])
+def process_lang():
+    if request.method == "POST":
+        page_lang = request.get_json()
+        session['language'] = page_lang[0]['language']
+        print(page_lang)
+        print(session['language'])
+
+    results = {'processed': 'true'}
+    return jsonify(results)

@@ -11,3 +11,5 @@ zipp==3.5.0
 pytest==6.2.5
 pyspellchecker==0.6.2
 munch == 2.5.0
+regex == 2021.11.10
+Flask-Babel == 2.0.0
