@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import argparse
-import csv
 import sys
-from joblib import Parallel, delayed
 
 from trieNode import *
 from context import *
 from create_db import *
+from error_model import *
 
 
 def get_triples(word_array, word_trie):
@@ -16,8 +15,7 @@ def get_triples(word_array, word_trie):
     for idx, word in enumerate(word_array):
         if not (idx % 1000):
             sys.stdout.write('\r')
-            sys.stdout.write(str(round(idx/total, 5)) + "%")
-    # results = Parallel(n_jobs=4, prefer="threads")(delayed(get_trip_helper)(word, word_trie) for word in word_array)
+            sys.stdout.write(str(round(idx/total, 5)*100) + "%")
         if len(word) <= 4:
             i_words = edit_distance(word_trie, word, 1)
             results.update({word: i_words})
@@ -27,8 +25,7 @@ def get_triples(word_array, word_trie):
         else:
             i_words = edit_distance(word_trie, word, 3)
             results.update({word: i_words})
-    # print(results)
-    return results #{k: v for d in results for k, v in d.items()}
+    return results
 
 def get_trip_helper(word, word_trie):
     if len(word) <= 4:
@@ -77,31 +74,53 @@ def weight_triples(word_triples, dict_db):
                     results.update({o_word: tmp_list})
     return results
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-db', metavar='DictionaryDatabase', help='Specify JSON File which holds Dictionary DB to Process.'
                                                               'This should be unfiltered to include every word found in'
                                                               'the corpus')
+parser.add_argument('-wt', metavar='WeightedTriples', help='Specify JSON File with hold weighted triples for the error'
+                                                           'model. This argument allow for skipping the long process of'
+                                                           ' building the triples. Use this arg instead of -db.')
 args = parser.parse_args()
 
-print("Load full dictionary")
-dict_db = loadDictionary(args.db)
-word_array = dict_db.keys()
-# print(len(word_array))
+if args.db:
+    print("Load full dictionary")
+    dict_db = loadDictionary(args.db)
+    word_array = dict_db.keys()
 
-print("Create trie with all words")
-word_trie = load_word_list(word_array)
+    print("Create trie with all words")
+    word_trie = load_word_list(word_array)
 
-print("Build triples")
-word_triples = get_triples(word_array, word_trie)
+    print("Build triples")
+    word_triples = get_triples(word_array, word_trie)
 
-print("Filter triples")
-filtered_triples = filter_triples(word_triples, dict_db, 10)
+    print("Filter triples")
+    filtered_triples = filter_triples(word_triples, dict_db, 10)
 
-print("Check triples context")
-weighted_triples = weight_triples(filtered_triples, dict_db)
+    print("Check triples context")
+    weighted_triples = weight_triples(filtered_triples, dict_db)
+
+if args.wt:
+    f = open(args.db, encoding='utf-8')
+    text = f.read()
+    f.close()
+    weighted_triples = json.loads(text)
+
+em = ErrorModel()
+for given in weighted_triples:
+    for intended in weighted_triples[given]:
+        letters = align_words(given, intended[0])
+        em.updt_lps(letters)
 
 print("Saving to File")
-out = open('weighted_triple.json', "w", encoding='utf-8')
-json_out = json.dumps(weighted_triples, ensure_ascii=False)
+if args.db:
+    out = open('weighted_triples.json', "w", encoding='utf-8')
+    json_out = json.dumps(weighted_triples, ensure_ascii=False)
+    out.write(json_out)
+    out.close()
+
+out = open('letter_pairs.json', "w", encoding='utf-8')
+json_out = json.dumps({"letter_pairs": em.letter_pairs}, ensure_ascii=False)
 out.write(json_out)
 out.close()
