@@ -28,8 +28,8 @@ HTML file that uses base template to create specific page for textbox editor
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a>{{ _('Languages:') }}</a>
-            <a onclick="lang_select(this); closeNav();">{{ _('English') }}</a>
-            <a onclick="lang_select(this); closeNav();">{{ _('Irish') }}</a>
+            <a onclick="lang_select(this, 'English'); closeNav();">{{ _('English') }}</a>
+            <a onclick="lang_select(this, 'Irish'); closeNav();">{{ _('Irish') }}</a>
         </div>
 
         <style>
@@ -55,7 +55,7 @@ HTML file that uses base template to create specific page for textbox editor
         <div class="container">
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
-                <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">{{ _('English') }}</textarea>
+                <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">English</textarea>
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
                     {% for word in misspelled_words%}
                         {%if word[1] != ' '%}
@@ -140,16 +140,15 @@ HTML file that uses base template to create specific page for textbox editor
             }
         }
 
-        function lang_select(obj){
+        function lang_select(obj, lang){
             console.log($(obj).text());
             word = $(obj).text();
             document.querySelector("#Language").innerHTML = word;
-            document.getElementById("LangSelectTextArea").innerHTML = word;
+            document.getElementById("LangSelectTextArea").innerHTML = lang;
         }
 
         function setLanguage(){
             {%if langSelect%}
-                document.querySelector("#Language").innerHTML = "{{langSelect}}";
                 document.getElementById("LangSelectTextArea").innerHTML = "{{ langSelect }}"
             {%endif%}
         }
