@@ -115,12 +115,12 @@ for given in weighted_triples:
 
 print("Saving to File")
 if args.db:
-    out = open('weighted_triples.json', "w", encoding='utf-8')
+    out = open('weighted_triples_en.json', "w", encoding='utf-8')
     json_out = json.dumps(weighted_triples, ensure_ascii=False)
     out.write(json_out)
     out.close()
 
-out = open('letter_pairs.json', "w", encoding='utf-8')
+out = open('letter_pairs_en.json', "w", encoding='utf-8')
 json_out = json.dumps({"letter_pairs": em.letter_pairs}, ensure_ascii=False)
 out.write(json_out)
 out.close()

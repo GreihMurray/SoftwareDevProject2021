@@ -63,9 +63,10 @@ def sort_recs_by_context(recs, context, dictDB):
 def logicCntrl(word, context, language, dictDB, error_model, trie):
     # In Dictionary?
     correct = False
+    context_err = True
     lower_word = toLower(word)
     if language == "English":
-        correct = check_word(lower_word)
+        correct = lower_word in dictDB#check_word(lower_word)
     elif language == "Irish":
         correct = lower_word in dictDB
 
@@ -109,6 +110,7 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
                 retVal = [word]
     # Run Through Error Model
     else:
+        context_err = False
         # Return Recs
         ed_words_tmp = edit_distance(trie, lower_word, 1)
         ed_words = []
@@ -117,7 +119,7 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
         recs = error_model.rec_list(lower_word, 0, ed_words)
         sorted_recs = sort_recs_by_context(recs, context, dictDB)
         retVal = list(zip(*sorted_recs))[0]
-    return retVal
+    return retVal, context_err
 
 
 def toLower(word):

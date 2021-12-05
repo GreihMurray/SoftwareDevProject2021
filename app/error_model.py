@@ -27,10 +27,14 @@ class ErrorModel():
         return round(prob,4)
 
     def rec_list(self, given, given_prob, ed_words):
-        recs = [[given, given, given_prob]]
+        recs = []
+        if given_prob > 0:
+            recs = [[given, given, given_prob]]
         for word in ed_words:
             letters = align_words(given, word[0])
-            recs.append([word[0], given, round(self.p_i_g(letters)*word[1], 4)])
+            prob = round(self.p_i_g(letters)*word[1], 4)
+            if prob > 0:
+                recs.append([word[0], given, prob])
         return sorted(recs, key=lambda x: x[2], reverse=True)
 
 
