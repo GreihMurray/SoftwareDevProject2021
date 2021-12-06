@@ -66,7 +66,7 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
     context_err = True
     lower_word = toLower(word)
     if language == "English":
-        correct = lower_word in dictDB#check_word(lower_word)
+        correct = lower_word in dictDB
     elif language == "Irish":
         correct = lower_word in dictDB
 
@@ -83,7 +83,7 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
             ed_words.append([ed_word, dictDB[ed_word].instances])
         recs = error_model.rec_list(lower_word, dictDB[lower_word].instances, ed_words)
         sorted_recs = sort_recs_by_context(recs, context, dictDB)
-        recs_list = list(zip(*sorted_recs))
+        recs_list = list(zip(*sorted_recs))[0]
         # Is word top of recs?
         if lower_word == recs[0]:
             # Yes, Correct word

@@ -73,9 +73,13 @@ for idx, word in enumerate(word_list):
             true_neg += 1
         else:
             false_pos += 1
+            if context_err:
+                c_err += 1
     else:
         if retVal[idx][0] != retVal[idx][1]:
             true_pos += 1
+            if context_err:
+                c_err += 1
         else:
             false_neg += 1
 
