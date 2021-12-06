@@ -15,6 +15,7 @@ $(document).ready(function () {
     divArea.css({ cursor: 'pointer' });
     divArea.dblclick(function (event) {
         selection = window.getSelection();
+        console.log(selection);
         word = $.trim(selection.toString());
         console.log(word);
         recsMenu();
@@ -34,6 +35,7 @@ function recsMenu() {
     menu = ".context-menu";
     menuItem = ".context-menu li";
     menuItemID = '#ItemList';
+    console.log(word);
     console.log(recommendations);
     setMenuItems(menuItemID, recommendations);
     console.log(document.getElementById("contextMenu").innerHTML);
@@ -65,7 +67,8 @@ function setMenuItems(menu, items) {
 
 function replaceWord(docArea, markedWord, item) {
     var correct = $(item).attr("data-action");
-    document.getElementById(docArea).innerHTML = document.getElementById(docArea).innerHTML.replace(markedWord, correct);
+    document.getElementById(word).innerHTML = $(item).text();
+    document.getElementById(word).className = '';
 }
 
 function showMenu(menu, event) {

@@ -59,7 +59,7 @@ HTML file that uses base template to create specific page for textbox editor
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
                     {% for word in misspelled_words%}
                         {%if word[1] != ' '%}
-                            <span class={{word[0]}} style="display:inline-block;">{{word[1]}}</span>
+                            <span class={{word[0]}} style="display:inline-block;" id="{{ word[1] }}">{{word[1]}}</span>
                         {%endif%}
                         {%if word[1] == ' '%}
                             <span style="word-spacing:2px;">&nbsp;</span>
@@ -125,6 +125,7 @@ HTML file that uses base template to create specific page for textbox editor
                         temp.push('{{ word }}');
                     {% endfor %}
                     recommend['{{ rec[0] }}'] = temp;
+                    console.log(temp + "    ////    " + {{ rec[0] }});
                 {% endfor %}
                 console.log(recommend);
                 setRecommendations(recommend);
