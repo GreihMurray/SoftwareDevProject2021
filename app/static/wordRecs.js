@@ -3,10 +3,10 @@
 
 var word;
 var selection;
-var recommendations;
+var recommends;
 
 function setRecommendations(recs){
-    recommendations = recs;
+    recommends = recs;
 }
 
 // Sets up and creates a double click function for the dropdown menu
@@ -28,6 +28,7 @@ $(document).ready(function () {
 
 // Get corrections and display in a dropdown menu
 function recsMenu() {
+    recommendations = recommends[word];
     docArea = "divArea";
     markedWord = '<span style="text-decoration: underline;">' + word + '</span>';
     menu = ".context-menu";

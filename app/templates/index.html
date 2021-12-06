@@ -118,9 +118,13 @@ HTML file that uses base template to create specific page for textbox editor
         <script src = "{{url_for('static', filename='wordRecs.js')}}"></script>
         {%if recommendations %}
             <script>
-                var recommend = [];
-                {% for rec in recommendations[0][1] %}
-                    recommend.push('{{ rec }}');
+                var recommend = {};
+                {% for rec in recommendations %}
+                    var temp = [];
+                    {% for word in rec[1] %}
+                        temp.push('{{ word }}');
+                    {% endfor %}
+                    recommend['{{ rec[0] }}'] = temp;
                 {% endfor %}
                 console.log(recommend);
                 setRecommendations(recommend);
