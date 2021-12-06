@@ -1,14 +1,23 @@
 // This file is for the double click of the mouse function and assigning it to a dropdown menu
 // for recommendations to misspelled or context sensitive words.
 
+var word;
+var selection;
+var recommendations;
+
+function setRecommendations(recs){
+    recommendations = recs;
+}
+
 // Sets up and creates a double click function for the dropdown menu
 $(document).ready(function () {
     var divArea = $("#InputOutputDiv");
     divArea.css({ cursor: 'pointer' });
     divArea.dblclick(function (event) {
-        var selection = window.getSelection();
-        var word = $.trim(selection.toString());
+        selection = window.getSelection();
+        word = $.trim(selection.toString());
         console.log(word);
+        recsMenu();
         // **********************
         // if word is a misspelled or context sensitive, then send to function:
         // recsMenu(word, event, recommendations);
@@ -18,12 +27,12 @@ $(document).ready(function () {
 });
 
 // Get corrections and display in a dropdown menu
-function recsMenu(word, event, recommendations) {
-    docArea = "divArea"
-    markedWord = '<span style="text-decoration: underline 2px red;">' + word + '</span>'
-    menu = ".context-menu"
-    menuItem = ".context-menu li"
-    menuItemID = '#ItemList'
+function recsMenu() {
+    docArea = "divArea";
+    markedWord = '<span style="text-decoration: underline;">' + word + '</span>';
+    menu = ".context-menu";
+    menuItem = ".context-menu li";
+    menuItemID = '#ItemList';
     console.log(recommendations);
     setMenuItems(menuItemID, recommendations);
     console.log(document.getElementById("contextMenu").innerHTML);
@@ -41,8 +50,8 @@ function recsMenu(word, event, recommendations) {
             hideMenu(menu);
         }
     });
-    },
 }
+
 
 function setMenuItems(menu, items) {
   var menuItems = ''
