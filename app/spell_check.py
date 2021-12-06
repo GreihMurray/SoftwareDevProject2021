@@ -118,7 +118,10 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
             ed_words.append([lower_word, dictDB[lower_word].instances])
         recs = error_model.rec_list(lower_word, 0, ed_words)
         sorted_recs = sort_recs_by_context(recs, context, dictDB)
-        retVal = list(zip(*sorted_recs))[0]
+        if len(sorted_recs) != 0:
+            retVal = list(zip(*sorted_recs))[0]
+        else:
+            retVal = [word]
     return retVal, context_err
 
 

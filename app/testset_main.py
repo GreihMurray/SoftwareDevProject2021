@@ -51,6 +51,8 @@ false_pos = 0
 false_neg = 0
 correct_rec = 0
 incorrect_rec = 0
+c_err = 0
+context_err = False
 for idx, word in enumerate(word_list):
     if regex.search(r'([^\p{L}\'-])', word):
         retVal.append([word, word])
@@ -63,7 +65,7 @@ for idx, word in enumerate(word_list):
             aftW = toLower(word_list[idx+1])
         else:
             aftW = ""
-        recs = logicCntrl(word, [prevW, aftW], args.l, test_dictDB, error_model, word_trie)
+        recs, context_err = logicCntrl(word, [prevW, aftW], args.l, test_dictDB, error_model, word_trie)
         retVal.append([word, recs[0]])
 
     if answer_list[idx][0] == answer_list[idx][1]:
@@ -92,6 +94,7 @@ accuracy_recs = correct_rec / (correct_rec + incorrect_rec)
 precision = true_pos / (true_pos + false_pos)
 recall = true_pos / (true_pos + false_neg)
 f1_score = 2 * (precision * recall) / (precision + recall)
+print("Context Misspellings: " + str(c_err))
 print("True Positive - True Negative - False Positive - False Negative")
 print(str(true_pos) + " " + str(true_neg) + " " + str(false_pos) + " " + str(false_neg))
 print("F1 Score: " + str(f1_score))
