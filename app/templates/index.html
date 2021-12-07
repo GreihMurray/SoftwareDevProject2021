@@ -45,50 +45,50 @@ HTML file that uses base template to create specific page for textbox editor
             }
         </style>
 
-        <!-- Textbox descriptions -->
-        <br>
-        <p style="text-align: left; padding-left: 10%;">{{ _('Input Text:') }}
-            <span style="float:right; padding-right:41%;">{{ _('Recommendations:') }}</span>
-        </p>
-
+        <br><br><br><br>
+        
         <!-- Textbox container -->
         <div class="container">
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+                <!-- Submit button -->
+                <button type="submit" class="button button1" style="margin:0; position:absolute; top:30%; left:50%;
+                        -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
+                </button>
+
+                <style>
+                    .button { border: none; color: white; padding: 10px 30px; text-align: center; text-decoration: none;
+                        display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; }
+                    .button1 {background-color: #04AA6D;} /* Green */
+                </style>
+
+                <!-- Text input area -->
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
                 <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">English</textarea>
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
                     {% for word in misspelled_words%}
                         {%if word[1] != ' '%}
-                            <span class={{word[0]}} style="display:inline-block;">{{word[1]}}</span>
+                            <span class={{word[0]}} style="display:inline-block;" id="{{ word[1] }}">{{word[1]}}</span>
                         {%endif%}
                         {%if word[1] == ' '%}
                             <span style="word-spacing:2px;">&nbsp;</span>
                         {%endif%}
                     {% endfor %}
                 </div>
-                <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight" style="float:left">
-                    {% for entry, recs in recommendations%}
-                        <span>Misspelled Word: {{entry}}</span>
-                        <br>
-                        {%for rec in recs%}
-                            <span>{{rec}}</span><br>
-                        {%endfor%}
-                        <br><br>
-                    {% endfor %}
-                </div>
 
                 <style>
-                    .divStyleLeft{ width: 35%; height: 50vh; margin-left: 10%; padding: 1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
-                    .divStyleRight{ width: 35%; height: 50vh; margin-left:6.75%; padding:1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
+                    .divStyleLeft{ width: 50%; height: 50vh; margin-left: 25%; padding: 1%;
+                        outline: white; outline-style: double; outline-width: medium; outline-offset: 3px;
+                        text-align: left; float: left; overflow-y: auto; }
+                    .context-menu { position: absolute; text-align: center; background: rgb(0, 0, 0);
+                        border: 1px solid grey; }
+                    .context-menu ul { padding: 0px; margin: 0px; min-width: 150px; list-style: none; }
+                    .context-menu ul li a { text-decoration: none; color: lavender; }
+                    .context ul li:hover { background: black; }
                 </style>
 
-                <br>
-
-                <button type="submit" style="margin:0; position:absolute; left:47.5%;">{{ _('Spell Check') }}</button>
+                <div id="contextMenu" class="context-menu" style="display: none">
+                    <ul id="ItemList"></ul>
+                </div>
 
             </form>
         </div>
@@ -100,12 +100,29 @@ HTML file that uses base template to create specific page for textbox editor
             in_out_div.parentNode.innerHTML = newHTML;
         </script>
 
-    </body>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous">
+        </script>
 
-{#    <script src="https://code.jquery.com/jquery-3.5.1.js"#}
-{#                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="#}
-{#                crossorigin="anonymous">#}
-{#    </script>#}
+        <script src = "{{url_for('static', filename='wordRecs.js')}}"></script>
+        {%if recommendations %}
+            <script>
+                var recommend = {};
+                {% for rec in recommendations %}
+                    var temp = [];
+                    {% for word in rec[1] %}
+                        temp.push('{{ word }}');
+                    {% endfor %}
+                    recommend['{{ rec[0] }}'] = temp;
+                    console.log(temp + "    ////    " + {{ rec[0] }});
+                {% endfor %}
+                console.log(recommend);
+                setRecommendations(recommend);
+            </script>
+        {% endif %}
+
+    </body>
 
     <script type="text/javascript">
         //Prevents resubmission of form when page is refreshed
@@ -152,9 +169,6 @@ HTML file that uses base template to create specific page for textbox editor
                 document.getElementById("LangSelectTextArea").innerHTML = "{{ langSelect }}"
             {%endif%}
         }
-
-
     </script>
-
 
 {% endblock %}
