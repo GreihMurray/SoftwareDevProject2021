@@ -99,4 +99,3 @@ def process_lang():
 
     results = {'processed': 'true'}
     return jsonify(results)
-
