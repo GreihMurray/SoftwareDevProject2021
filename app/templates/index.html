@@ -45,11 +45,19 @@ HTML file that uses base template to create specific page for textbox editor
             }
         </style>
 
-        <!-- Textbox descriptions -->
-        <br>
-        <p style="text-align: center; padding-right: 45%;">{{ _('Input Text:') }}
-<!--            <span style="float:right; padding-right:41%;">{{ _('Recommendations:') }}</span>-->
-        </p>
+        <br><br><br><br>
+
+        <!-- Submit button -->
+        <button type="submit" class="button button1" style="margin:0; position:absolute; top:30%; left:50%;
+                -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
+        </button>
+
+        <style>
+            .button { border: none; color: white; padding: 10px 30px; text-align: center; text-decoration: none;
+                display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; }
+            .button1 {background-color: #04AA6D;} /* Green */
+        </style>
+
 
         <!-- Textbox container -->
         <div class="container">
@@ -66,27 +74,11 @@ HTML file that uses base template to create specific page for textbox editor
                         {%endif%}
                     {% endfor %}
                 </div>
-<!--                <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight" style="float:left">-->
-<!--                    {% for entry, recs in recommendations%}-->
-<!--                        <span>Misspelled Word: {{entry}}</span>-->
-<!--                        <br>-->
-<!--                        {%for rec in recs%}-->
-<!--                            <span>{{rec}}</span><br>-->
-<!--                        {%endfor%}-->
-<!--                        <br><br>-->
-<!--                    {% endfor %}-->
-<!--                </div>-->
 
                 <style>
                     .divStyleLeft{ width: 50%; height: 50vh; margin-left: 25%; padding: 1%;
                         outline: white; outline-style: double; outline-width: medium; outline-offset: 3px;
                         text-align: left; float: left; overflow-y: auto; }
-<!--                    .custom-menu { display: none; z-index: 1000; position: absolute; overflow: hidden;-->
-<!--                        border: 1px solid #CCC; white-space: nowrap; font-family: sans-serif; background: #FFF;-->
-<!--                        color: #333; border-radius: 5px; padding: 0; }-->
-<!--                    .custom-menu li { padding: 8px 12px; cursor: pointer; list-style-type: none;-->
-<!--                        transition: all .3s ease; user-select: none; }-->
-<!--                    .custom-menu li:hover { background-color: #DEF; }-->
                     .context-menu { position: absolute; text-align: center; background: rgb(0, 0, 0);
                         border: 1px solid grey; }
                     .context-menu ul { padding: 0px; margin: 0px; min-width: 150px; list-style: none; }
@@ -97,10 +89,6 @@ HTML file that uses base template to create specific page for textbox editor
                 <div id="contextMenu" class="context-menu" style="display: none">
                     <ul id="ItemList"></ul>
                 </div>
-
-                <br><br><br><br>
-
-                <button type="submit" style="margin:0; position:absolute; left:50%;">{{ _('Spell Check') }}</button>
 
             </form>
         </div>
@@ -135,8 +123,6 @@ HTML file that uses base template to create specific page for textbox editor
         {% endif %}
 
     </body>
-
-
 
     <script type="text/javascript">
         //Prevents resubmission of form when page is refreshed
@@ -184,9 +170,6 @@ HTML file that uses base template to create specific page for textbox editor
                 document.getElementById("LangSelectTextArea").innerHTML = "{{ langSelect }}"
             {%endif%}
         }
-
-
     </script>
-
 
 {% endblock %}
