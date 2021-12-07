@@ -47,8 +47,8 @@ HTML file that uses base template to create specific page for textbox editor
 
         <!-- Textbox descriptions -->
         <br>
-        <p style="text-align: left; padding-left: 10%;">{{ _('Input Text:') }}
-            <span style="float:right; padding-right:41%;">{{ _('Recommendations:') }}</span>
+        <p style="text-align: center; padding-right: 45%;">{{ _('Input Text:') }}
+<!--            <span style="float:right; padding-right:41%;">{{ _('Recommendations:') }}</span>-->
         </p>
 
         <!-- Textbox container -->
@@ -66,39 +66,41 @@ HTML file that uses base template to create specific page for textbox editor
                         {%endif%}
                     {% endfor %}
                 </div>
-                <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight" style="float:left">
-                    {% for entry, recs in recommendations%}
-                        <span>Misspelled Word: {{entry}}</span>
-                        <br>
-                        {%for rec in recs%}
-                            <span>{{rec}}</span><br>
-                        {%endfor%}
-                        <br><br>
-                    {% endfor %}
-                </div>
+<!--                <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight" style="float:left">-->
+<!--                    {% for entry, recs in recommendations%}-->
+<!--                        <span>Misspelled Word: {{entry}}</span>-->
+<!--                        <br>-->
+<!--                        {%for rec in recs%}-->
+<!--                            <span>{{rec}}</span><br>-->
+<!--                        {%endfor%}-->
+<!--                        <br><br>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
 
                 <style>
-                    .divStyleLeft{ width: 35%; height: 50vh; margin-left: 10%; padding: 1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
-                    .divStyleRight{ width: 35%; height: 50vh; margin-left:6.75%; padding:1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
-                    .custom-menu { display: none; z-index: 1000; position: absolute; overflow: hidden;
-                        border: 1px solid #CCC; white-space: nowrap; font-family: sans-serif; background: #FFF;
-                        color: #333; border-radius: 5px; padding: 0; }
-                    .custom-menu li { padding: 8px 12px; cursor: pointer; list-style-type: none;
-                        transition: all .3s ease; user-select: none; }
-                    .custom-menu li:hover { background-color: #DEF; }
+                    .divStyleLeft{ width: 50%; height: 50vh; margin-left: 25%; padding: 1%;
+                        outline: white; outline-style: double; outline-width: medium; outline-offset: 3px;
+                        text-align: left; float: left; overflow-y: auto; }
+<!--                    .custom-menu { display: none; z-index: 1000; position: absolute; overflow: hidden;-->
+<!--                        border: 1px solid #CCC; white-space: nowrap; font-family: sans-serif; background: #FFF;-->
+<!--                        color: #333; border-radius: 5px; padding: 0; }-->
+<!--                    .custom-menu li { padding: 8px 12px; cursor: pointer; list-style-type: none;-->
+<!--                        transition: all .3s ease; user-select: none; }-->
+<!--                    .custom-menu li:hover { background-color: #DEF; }-->
+                    .context-menu { position: absolute; text-align: center; background: rgb(0, 0, 0);
+                        border: 1px solid grey; }
+                    .context-menu ul { padding: 0px; margin: 0px; min-width: 150px; list-style: none; }
+                    .context-menu ul li a { text-decoration: none; color: lavender; }
+                    .context ul li:hover { background: black; }
                 </style>
 
                 <div id="contextMenu" class="context-menu" style="display: none">
                     <ul id="ItemList"></ul>
                 </div>
 
-                <br>
+                <br><br><br><br>
 
-                <button type="submit" style="margin:0; position:absolute; left:47.5%;">{{ _('Spell Check') }}</button>
+                <button type="submit" style="margin:0; position:absolute; left:50%;">{{ _('Spell Check') }}</button>
 
             </form>
         </div>

@@ -19,11 +19,6 @@ $(document).ready(function () {
         word = $.trim(selection.toString());
         console.log(word);
         recsMenu();
-        // **********************
-        // if word is a misspelled or context sensitive, then send to function:
-        // recsMenu(word, event, recommendations);
-        // NOTE: I'm not sure how to get the recommendations to this .js file
-        // **********************
     });
 });
 
@@ -54,7 +49,6 @@ function recsMenu() {
         }
     });
 }
-
 
 function setMenuItems(menu, items) {
   var menuItems = ''
