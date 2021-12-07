@@ -46,22 +46,22 @@ HTML file that uses base template to create specific page for textbox editor
         </style>
 
         <br><br><br><br>
-
-        <!-- Submit button -->
-        <button type="submit" class="button button1" style="margin:0; position:absolute; top:30%; left:50%;
-                -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
-        </button>
-
-        <style>
-            .button { border: none; color: white; padding: 10px 30px; text-align: center; text-decoration: none;
-                display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; }
-            .button1 {background-color: #04AA6D;} /* Green */
-        </style>
-
-
+        
         <!-- Textbox container -->
         <div class="container">
             <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+                <!-- Submit button -->
+                <button type="submit" class="button button1" style="margin:0; position:absolute; top:30%; left:50%;
+                        -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
+                </button>
+
+                <style>
+                    .button { border: none; color: white; padding: 10px 30px; text-align: center; text-decoration: none;
+                        display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; }
+                    .button1 {background-color: #04AA6D;} /* Green */
+                </style>
+
+                <!-- Text input area -->
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
                 <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">{{ _('English') }}</textarea>
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
