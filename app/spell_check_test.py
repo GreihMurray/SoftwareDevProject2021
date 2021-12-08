@@ -54,7 +54,7 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [0, 4, 6, 8])
         # Some words in the below test do not appear in the dict due to lack of instances. If the dictionary is updated, this may change
         input_list, word_list = parse_txt('Briathra Amós , aoire de chuid Theacóá.')
-        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [2, 6, 12])
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
         input_list, word_list = parse_txt('     ')
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
 
