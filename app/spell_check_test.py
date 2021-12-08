@@ -24,12 +24,17 @@ class TestSpellCheckMethods(unittest.TestCase):
                           [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 28]))
 
     def test_check_word(self):
-        self.assertEqual(check_word(["Here", ' ', 'is', ' ', 'a', ' ', 'mispelled', ' ', 'word'], [0, 2, 4, 6, 8]), [6])
-        self.assertEqual(check_word(['letz', ' ', 'yuse', ' ', 'compleatly', ' ', 'mispelled', ' ', 'centense'],
-                                    [0, 2, 4, 6, 8]), [0, 2, 4, 6, 8])
-        self.assertEqual(check_word(['Let\'z', ' ', 'test', ' ', 'this', '!', ' ', 'It', ' ', 'is', ' ', 'grait', ' ',
-                                     'to', ' ', 'be', ' ', '@', ' ', 'the', ' ', 'balgame', ',', ' ', 'with', ' ', 'my',
-                                    ' ', 'friend','!'], [0, 2, 4, 7, 9, 11, 13, 15, 19, 21, 24, 26, 28]), [0, 11, 21])
+        self.assertTrue(check_word("here"))
+        self.assertTrue(check_word("is"))
+        self.assertTrue(check_word("a"))
+        self.assertFalse(check_word("mispelled"))
+        self.assertTrue(check_word("word"))
+        self.assertFalse(check_word("letz"))
+        self.assertFalse(check_word("yuse"))
+        self.assertFalse(check_word("@"))
+        self.assertFalse(check_word("!"))
+        self.assertFalse(check_word("let\'z"))
+        self.assertTrue(check_word("let\'s"))
 
     def test_sort_by_count(self):
         self.assertEqual(sort_by_count([['test', 10], ['text', 12], ['other', 8], ['thing', 4]]), [['text', 12], ['test', 10], ['other', 8], ['thing', 4]])
@@ -40,7 +45,7 @@ class TestSpellCheckMethods(unittest.TestCase):
 
     def test_check_other_langs_irish(self):
         lang_dictionaries = {}
-        lang_dictionaries['Irish'] = loadDictionary("IrishCorpus/filtered_db_output.json")
+        lang_dictionaries['Irish'] = loadDictionary("IrishCorpus/final_irish_dictionary.json")
         input_list, word_list = parse_txt('Mar seo a deir an Tiarna')
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
         input_list, word_list = parse_txt('Mrtre seo a deir an Tiarna')
@@ -49,7 +54,7 @@ class TestSpellCheckMethods(unittest.TestCase):
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [0, 4, 6, 8])
         # Some words in the below test do not appear in the dict due to lack of instances. If the dictionary is updated, this may change
         input_list, word_list = parse_txt('Briathra Amós , aoire de chuid Theacóá.')
-        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [2, 6, 12])
+        self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
         input_list, word_list = parse_txt('     ')
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
 

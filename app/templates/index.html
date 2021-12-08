@@ -13,11 +13,11 @@ HTML file that uses base template to create specific page for textbox editor
 
         <!-- Sidebar navigation container -->
         <div class="container" style="text-align:center">
-            <h2>Spellchecking System: Click on the language selection tool to open the menu of supported languages.</h2>
-            <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; Language Select</span>
+            <h2>{{ _('Spellchecking System: Click on the language selection tool to open the menu of supported languages.') }}</h2>
+            <span style="font-size:20px;cursor:pointer" onclick="openNav()">&#9776; {{ _('Language Select') }}</span>
             <br>
-            <p style="display:inline-block">Current language:</p>
-            <p style="display:inline-block; padding-left: 0.25%" id="Language">None Selected</p>
+            <p style="display:inline-block">{{ _('Current language:') }}</p>
+            <p style="display:inline-block; padding-left: 0.25%" id="Language">{{ _('English') }}</p>
         </div>
 
         <script>
@@ -27,9 +27,9 @@ HTML file that uses base template to create specific page for textbox editor
 
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a>Languages:</a>
-            <a onclick="lang_select('English')">English</a>
-            <a onclick="lang_select('Irish')">Irish</a>
+            <a>{{ _('Languages:') }}</a>
+            <a onclick="lang_select(this, 'English'); closeNav();">{{ _('English') }}</a>
+            <a onclick="lang_select(this, 'Irish'); closeNav();">{{ _('Irish') }}</a>
         </div>
 
         <style>
@@ -45,50 +45,50 @@ HTML file that uses base template to create specific page for textbox editor
             }
         </style>
 
-        <!-- Textbox descriptions -->
-        <br>
-        <p style="text-align: left; padding-left: 10%;">Input Text:
-            <span style="float:right; padding-right:41%;">Recommendations:</span>
-        </p>
-
+        <br><br><br><br>
+        
         <!-- Textbox container -->
         <div class="container">
-            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false" onkeypress="return event.keyCode != 13;">
+                <!-- Submit button -->
+                <button type="submit" class="button button1" id="submitButton" style="margin:0; position:absolute; top:30%; left:50%;
+                        -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
+                </button>
+
+                <style>
+                    .button { border: none; color: white; padding: 10px 30px; text-align: center; text-decoration: none;
+                        display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; }
+                    .button1 {background-color: #04AA6D;} /* Green */
+                </style>
+
+                <!-- Text input area -->
                 <textarea id="InputOutputTextArea" style="display: none" name="TextToCheck"></textarea>
                 <textarea id="LangSelectTextArea" style="display: none" name="LangSelect">English</textarea>
                 <div contenteditable="true" id="InputOutputDiv" class="divStyleLeft" style="float: left">
                     {% for word in misspelled_words%}
                         {%if word[1] != ' '%}
-                            <span class={{word[0]}} style="display:inline-block;">{{word[1]}}</span>
+                            <span class={{word[0]}} style="display:inline-block;" id="{{ word[1] }}">{{word[1]}}</span>
                         {%endif%}
                         {%if word[1] == ' '%}
                             <span style="word-spacing:2px;">&nbsp;</span>
                         {%endif%}
                     {% endfor %}
                 </div>
-                <div contenteditable="false" id="RecommendationsDiv" class="divStyleRight" style="float:left">
-                    {% for entry, recs in recommendations%}
-                        <span>Misspelled Word: {{entry}}</span>
-                        <br>
-                        {%for rec in recs%}
-                            <span>{{rec}}</span><br>
-                        {%endfor%}
-                        <br><br>
-                    {% endfor %}
-                </div>
 
                 <style>
-                    .divStyleLeft{ width: 35%; height: 50vh; margin-left: 10%; padding: 1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
-                    .divStyleRight{ width: 35%; height: 50vh; margin-left:6.75%; padding:1%; outline: white;
-                        outline-style: double; outline-width: medium; outline-offset: 3px; text-align: left;
-                        float: left; overflow-y: auto; }
+                    .divStyleLeft{ width: 50%; height: 50vh; margin-left: 25%; padding: 1%;
+                        outline: white; outline-style: double; outline-width: medium; outline-offset: 3px;
+                        text-align: left; float: left; overflow-y: auto; }
+                    .context-menu { position: absolute; text-align: center; background: rgb(0, 0, 0);
+                        border: 1px solid grey; }
+                    .context-menu ul { padding: 0px; margin: 0px; min-width: 150px; list-style: none; }
+                    .context-menu ul li a { text-decoration: none; color: lavender; }
+                    .context ul li:hover { background: black; }
                 </style>
 
-                <br>
-
-                <button type="submit" style="margin:0; position:absolute; left:47.5%;">Spell Check</button>
+                <div id="contextMenu" class="context-menu" style="display: none">
+                    <ul id="ItemList"></ul>
+                </div>
 
             </form>
         </div>
@@ -100,18 +100,43 @@ HTML file that uses base template to create specific page for textbox editor
             in_out_div.parentNode.innerHTML = newHTML;
         </script>
 
-    </body>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous">
+        </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-                crossorigin="anonymous">
-    </script>
+        <script src = "{{url_for('static', filename='wordRecs.js')}}"></script>
+        {%if recommendations %}
+            <script>
+                var recommend = {};
+                {% for rec in recommendations %}
+                    var temp = [];
+                    {% for word in rec[1] %}
+                        temp.push('{{ word }}');
+                    {% endfor %}
+                    recommend['{{ rec[0] }}'] = temp;
+                    console.log(temp + "    ////    " + {{ rec[0] }});
+                {% endfor %}
+                console.log(recommend);
+                setRecommendations(recommend);
+            </script>
+        {% endif %}
+
+    </body>
 
     <script type="text/javascript">
         //Prevents resubmission of form when page is refreshed
         if (window.history.replaceState) {
             window.history.replaceState( null, null, window.location.href );
         }
+
+        var input = document.getElementById("InputOutputDiv");
+
+        input.addEventListener("keyup", function(event){
+            if(event.keyCode === 13){
+                document.getElementById("submitButton").click();
+            }
+        });
 
         //Method that runs on form submission to get data from div and put into textarea to be sent to backend
         function getContent(){
@@ -121,9 +146,7 @@ HTML file that uses base template to create specific page for textbox editor
             /*Checks for child nodes in div
                 if child nodes are found, iterates through each one to get data
                 adds that data to inputoutput text area so it can be passed to backend properly
-
                 If no child nodes are found, adds contents of div to inputoutput text area
-
                 If child node text is &nbsp, replaces with a standard space
             */
 
@@ -140,19 +163,18 @@ HTML file that uses base template to create specific page for textbox editor
             }
         }
 
-        function lang_select(word){
-            console.log(word);
+        function lang_select(obj, lang){
+            console.log($(obj).text());
+            word = $(obj).text();
             document.querySelector("#Language").innerHTML = word;
-            document.getElementById("LangSelectTextArea").innerHTML = word;
+            document.getElementById("LangSelectTextArea").innerHTML = lang;
         }
 
         function setLanguage(){
             {%if langSelect%}
-                document.querySelector("#Language").innerHTML = "{{langSelect}}";
                 document.getElementById("LangSelectTextArea").innerHTML = "{{ langSelect }}"
             {%endif%}
         }
     </script>
-
 
 {% endblock %}

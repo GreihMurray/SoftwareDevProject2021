@@ -1,14 +1,15 @@
 import unicodedata
-
-from spellchecker import SpellChecker
-from .distance_recs import *
 import regex
+from spellchecker import SpellChecker
+from .trieNode import *
+
 
 def parse_txt(raw_input):
     init_word_list = regex.split(r'([^\p{L}0-9](?=\s)|[^\p{L}0-9]$|\s)', raw_input)
     input_list = []
     word_list = []
     for word in init_word_list:
+        word = unicodedata.normalize('NFC', word)
         if word == ' ':
             input_list.append(word)
         elif regex.search(r'([^\p{L}\'\-])', word):
@@ -19,14 +20,12 @@ def parse_txt(raw_input):
     return input_list, word_list
 
 
-def check_word(input_list, word_list):
+def check_word(word):
     check = SpellChecker()
-    results = []
-    for word_idx in word_list:
-        if not regex.search(r'([^\p{L}\'\-])', input_list[word_idx]):
-            if not check[input_list[word_idx]]:
-                results.append(word_idx)
-    return results
+    if not regex.search(r'([^\p{L}\'\-])', word):
+        if check[word]:
+            return True
+    return False
 
 def word_candidates(word_to_check):
     check = SpellChecker()
@@ -46,65 +45,84 @@ def check_other_lang(input_list, word_list, dictionary):
                 results.append(word_idx)
     return results
 
-def logicCntrl(inptTxt, language, dictDB):
-    retWords = []
-    retRecs = []
 
-    helper = LanguageHelper(dictDB[language], language)
+def sort_recs_by_context(recs, context, dictDB):
+    prob = 0
+    updt_recs = []
+    if context[0] in dictDB:
+        context_check = dictDB[context[0]].getContextRecs(context[1], 5)
+        if len(context_check) != 0:
+            context_words = list(zip(*context_check))[0]
+            for word in recs:
+                if word[0] in context_words:
+                    prob = context_check[context_words.index(word[0])][1]
+                updt_recs.append([word[0], word[1], word[2]*prob])
+            return sorted(updt_recs, key=lambda x: x[2], reverse=True)
+    return recs
 
-    input_list, word_list = parse_txt(inptTxt)
+def logicCntrl(word, context, language, dictDB, error_model, trie):
+    # In Dictionary?
+    correct = False
+    context_err = True
+    lower_word = toLower(word)
+    if language == "English":
+        correct = lower_word in dictDB
+    elif language == "Irish":
+        correct = lower_word in dictDB
 
-    for wordIdx, token in enumerate(input_list):
-        if wordIdx in word_list:
-            lower_word = toLower(input_list[wordIdx])
-            idx = word_list.index(wordIdx)
-            print(lower_word)
-            if language == "English":
-                if check_word([lower_word], [0]):
-                    rec_unordered = word_candidates(lower_word)
-                    rec_ordered_probs = []
-                    for rec in rec_unordered:
-                        if rec in dictDB["English"]:
-                            rec_ordered_probs.append([rec, dictDB["English"][rec].instances])
-                    rec_ordered = sort_by_count(rec_ordered_probs)
-                    retWords.append(('Misspelled_words', input_list[wordIdx]))
-                    retRecs.append((input_list[wordIdx], [row[0] for row in rec_ordered][:5]))
-                elif (idx != 0) and (idx != len(word_list) - 1) and (toLower(input_list[word_list[idx - 1]]) in dictDB["English"]) \
-                        and (toLower(input_list[word_list[idx + 1]]) in dictDB["English"]):
-                    print("in here - " + input_list[word_list[idx - 1]] + " " + input_list[word_list[idx + 1]])
-                    context_recs = dictDB["English"][toLower(input_list[word_list[idx - 1]])].getContextRecs(toLower(input_list[word_list[idx + 1]]), 5)
-                    if (len(context_recs) != 0) and not (input_list[wordIdx] in [row[0] for row in context_recs]):
-                        retWords.append(('Recommendation_words', input_list[wordIdx]))
-                        retRecs.append((input_list[wordIdx], [row[0] for row in context_recs]))
-                    else:
-                        retWords.append(('', input_list[wordIdx]))
-                else:
-                    print("how about here")
-                    retWords.append(('', input_list[wordIdx]))
-            elif language == "Irish":
-                if not (lower_word in dictDB["Irish"]):
-                    rec_unordered = helper.getSuggestionsExtra(lower_word)
-                    rec_ordered_probs = []
-                    for rec in rec_unordered:
-                        if rec in dictDB["Irish"]:
-                            rec_ordered_probs.append([rec, dictDB["Irish"][rec].instances])
-                    rec_ordered = sort_by_count(rec_ordered_probs)
-                    retWords.append(('Misspelled_words', input_list[wordIdx]))
-                    retRecs.append((input_list[wordIdx], [row[0] for row in rec_ordered][:5]))
-                elif (idx != 0) and (idx != len(word_list) - 1) and (toLower(input_list[word_list[idx - 1]]) in dictDB["Irish"]) \
-                        and (toLower(input_list[word_list[idx + 1]]) in dictDB["Irish"]):
-                    context_recs = dictDB["Irish"][toLower(input_list[word_list[idx - 1]])].getContextRecs(toLower(input_list[word_list[idx + 1]]), 10)
-                    if len(context_recs) != 0 and not (input_list[wordIdx] in [row[0] for row in context_recs]):
-                        retWords.append(('Recommendation_words', input_list[wordIdx]))
-                        retRecs.append((input_list[wordIdx], [row[0] for row in context_recs][:5]))
-                    else:
-                        retWords.append(('', input_list[wordIdx]))
-                else:
-                    retWords.append(('', input_list[wordIdx]))
+    if correct:
+        # Run Through Error Model
+        if len(word) <= 4:
+            ed_words_tmp = edit_distance(trie, word, 1)
+        elif len(word) <= 12:
+            ed_words_tmp = edit_distance(trie, word, 2)
         else:
-            retWords.append(('', input_list[wordIdx]))
-
-    return input_list, word_list, retWords, retRecs
+            ed_words_tmp = edit_distance(trie, word, 3)
+        ed_words = []
+        for ed_word in ed_words_tmp:
+            ed_words.append([ed_word, dictDB[ed_word].instances])
+        recs = error_model.rec_list(lower_word, dictDB[lower_word].instances, ed_words)
+        sorted_recs = sort_recs_by_context(recs, context, dictDB)
+        recs_list = list(zip(*sorted_recs))[0]
+        # Is word top of recs?
+        if lower_word == recs[0]:
+            # Yes, Correct word
+            retVal = [word]
+        else:
+            if context[0] in dictDB:
+                context_check = dictDB[context[0]].getContextRecs(context[1], 5)
+                word_prob = 0
+                rec_prob = 0
+                if len(context_check) != 0:
+                    context_words = list(zip(*context_check))[0]
+                    if lower_word in context_words:
+                        word_prob = context_check[context_words.index(lower_word)][1]
+                    if recs_list[0] in context_words:
+                        rec_prob = context_check[context_words.index(recs_list[0])][1]
+                    if word_prob*5 < rec_prob:
+                        retVal = recs_list
+                    else:
+                        retVal = [word]
+                else:
+                    retVal = [word]
+            # No, Incorrect & return recs
+            else:
+                retVal = [word]
+    # Run Through Error Model
+    else:
+        context_err = False
+        # Return Recs
+        ed_words_tmp = edit_distance(trie, lower_word, 1)
+        ed_words = []
+        for lower_word in ed_words_tmp:
+            ed_words.append([lower_word, dictDB[lower_word].instances])
+        recs = error_model.rec_list(lower_word, 0, ed_words)
+        sorted_recs = sort_recs_by_context(recs, context, dictDB)
+        if len(sorted_recs) != 0:
+            retVal = list(zip(*sorted_recs))[0]
+        else:
+            retVal = [word]
+    return retVal, context_err
 
 
 def toLower(word):
