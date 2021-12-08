@@ -99,7 +99,7 @@ def logicCntrl(word, context, language, dictDB, error_model, trie):
                         word_prob = context_check[context_words.index(lower_word)][1]
                     if recs_list[0] in context_words:
                         rec_prob = context_check[context_words.index(recs_list[0])][1]
-                    if word_prob*5 < rec_prob:
+                    if word_prob < rec_prob:
                         retVal = recs_list
                     else:
                         retVal = [word]

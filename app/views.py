@@ -38,12 +38,12 @@ def about_page():
 def index_page():
     # Load Dictionaries
     lang_dictionaries = {}
-    lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/final_irish_dictionary.json')
+    lang_dictionaries["Irish"] = loadDictionary('IrishCorpus/filtered_db_output.json')
     lang_dictionaries["English"] = loadDictionary('EnglishCorpus/Filtered_English_Dict.json')
     # Load Error Models
     lang_error_models = {}
-    lang_error_models["Irish"] = loadEM('IrishCorpus/irish_error_model.json')
-    lang_error_models["English"] = loadEM('EnglishCorpus/english_error_model.json')
+    lang_error_models["Irish"] = loadEM('IrishCorpus/letter_pairs_small.json')
+    lang_error_models["English"] = loadEM('EnglishCorpus/letter_pairs_en.json')
     # Build Tries
     lang_word_trie = {}
     lang_word_trie["Irish"] = load_word_list(lang_dictionaries["Irish"].keys())
@@ -99,4 +99,3 @@ def process_lang():
 
     results = {'processed': 'true'}
     return jsonify(results)
-

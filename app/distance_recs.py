@@ -1,10 +1,7 @@
-
 def deleteChar(query, words, suggest):
     """
     Function that deletes a character from a word.
-
     For each character of the query, delete the entry and send to appendSuggest for further word checking.
-
     query     original user input
     words     set of acceptable words
     suggest   list for appending newWord
@@ -18,10 +15,8 @@ def deleteChar(query, words, suggest):
 def addChar(query, alpha, words, suggest):
     """
     Function that adds a character to a word.
-
     For each character position of the query, add each entry from alpha between character entries and send to
     appendSuggest for further word checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -37,10 +32,8 @@ def addChar(query, alpha, words, suggest):
 def changeChar(query, alpha, words, suggest):
     """
     Function that changes a character in a word.
-
     For each character position of the query, change each entry using alpha and send to appendSuggest for further word
     checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -58,10 +51,8 @@ def changeChar(query, alpha, words, suggest):
 def switchChar(query, words, suggest):
     """
     Function that switches neighboring characters in a word.
-
     For each pair of characters in the query, switch the two characters and send to appendSuggest for further word
     checking.
-
     query     original user input
     alpha     pre-defined alphabet and symbols
     words     set of acceptable words
@@ -81,10 +72,8 @@ def switchChar(query, words, suggest):
 def appendSuggest(newWord, words, suggest):
     """
     Function that appends words similar to a user query to a list.
-
     If the word can be found in the set of accepted words or the lowercase version can be found there, and it already
     hasn't been added, then add the word to a new list.
-
     newWord   a new entry being checked
     words     a set of acceptable words
     suggest   a list for appending newWord
@@ -97,7 +86,6 @@ class LanguageHelper:
     def __init__(self, words, lang):
         """
         Creates a set word list to be referenced.
-
         words    a file or list of words that are defined as acceptable
         """
         self._words = []
@@ -108,7 +96,6 @@ class LanguageHelper:
     def __contains__(self,query):
         """
         Overrides the "in" conditional to return true or false if in words file from __init__.
-
         query    user input word
         """
         if query in self._words:
@@ -119,11 +106,9 @@ class LanguageHelper:
     def getSuggestions(self, query):
         """
         Returns a list of suggestions in response to the user query.
-
         Depending on the capitalization of the queried word, the suggestion list will return either capitalized or
         lowercase words. The words that are returned also correspond to either being one deleted character, one added
         character, one changed character, or a pair of switched characters away from the original.
-
         query    user input word
         """
         # Initial Set-Up
@@ -170,10 +155,8 @@ class LanguageHelper:
     def getSuggestionsExtra(self, word):
         """
         Returns a list of suggestions in response to the user query.
-
         Depending on the capitalization of the queried word, the suggestion list will return either capitalized or
         lowercase words. The words that are returned also correspond to being multiple changes away.
-
         word    user input word
         """
         # Run the getSuggestions method with the user query
