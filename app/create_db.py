@@ -23,38 +23,43 @@ def initDB(wordArray):
 def assembleDB(wordArray, db, standard):
     # ** Uncomment this code if you want to only use wordArray for adding context
     #    and have already added all 'real' words to the db **
-    # if db != {}:
-    #     for i, word in enumerate(wordArray):
-    #         if i+2 < len(wordArray) and word in db:
-    #             if word in db:
-    #                 db[word].addContext(wordArray[i + 2], wordArray[i + 1])
-    #         elif i+1 < len(wordArray) and word in db:
-    #             db[word].addContext('', wordArray[i + 1])
-    #         elif word in db:
-    #             db[word].incrmtInstances()
-    # else:
-    if standard:
-        for i, word in enumerate(wordArray):
-            if i+2 < len(wordArray):
-                if word in db:
+    print(standard)
+    if db != {}:
+        if standard:
+            for i, word in enumerate(wordArray):
+                if (i+2 < len(wordArray)) and (word in db):
                     db[word].addContext(wordArray[i + 2], wordArray[i + 1])
-                else:
-                    db.update({word: Word(word, context={wordArray[i + 2]: {wordArray[i + 1]: 1}})})
-            elif i+1 < len(wordArray) and not isinstance(word, Word):
-                db.update({word: Word(word, context={'': {wordArray[i + 1]: 1}})})
-            elif not isinstance(word, Word):
-                db.update({word: Word(word)})
+                elif (i+1 < len(wordArray)) and (word in db):
+                    db[word].addContext('', wordArray[i + 1])
+        else:
+            for i, word in enumerate(wordArray):
+                if i != 0 and i+1 < len(wordArray):
+                    if word in db:
+                        db[word].addContext(wordArray[i - 1], wordArray[i + 1])
         return db
     else:
-        for i, word in enumerate(wordArray):
-            if i != 0 and i+1 < len(wordArray):
-                if word in db:
-                    db[word].addContext(wordArray[i - 1], wordArray[i + 1])
-                else:
-                    db.update({word: Word(word, context={wordArray[i - 1]: {wordArray[i + 1]: 1}})})
-            elif word not in db:
-                db.update({word: Word(word)})
-        return db
+        if standard:
+            for i, word in enumerate(wordArray):
+                if i+2 < len(wordArray):
+                    if word in db:
+                        db[word].addContext(wordArray[i + 2], wordArray[i + 1])
+                    else:
+                        db.update({word: Word(word, context={wordArray[i + 2]: {wordArray[i + 1]: 1}})})
+                elif i+1 < len(wordArray) and not isinstance(word, Word):
+                    db.update({word: Word(word, context={'': {wordArray[i + 1]: 1}})})
+                elif not isinstance(word, Word):
+                    db.update({word: Word(word)})
+            return db
+        else:
+            for i, word in enumerate(wordArray):
+                if i != 0 and i+1 < len(wordArray):
+                    if word in db:
+                        db[word].addContext(wordArray[i - 1], wordArray[i + 1])
+                    else:
+                        db.update({word: Word(word, context={wordArray[i - 1]: {wordArray[i + 1]: 1}})})
+                elif word not in db:
+                    db.update({word: Word(word)})
+            return db
 
 def filterDB(db, minInstances, minConstantInst):
     for word in list(db):
