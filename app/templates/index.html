@@ -49,9 +49,9 @@ HTML file that uses base template to create specific page for textbox editor
         
         <!-- Textbox container -->
         <div class="container">
-            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false">
+            <form method='POST' id="TextForm" onsubmit="return getContent()" spellcheck="false" onkeypress="return event.keyCode != 13;">
                 <!-- Submit button -->
-                <button type="submit" class="button button1" style="margin:0; position:absolute; top:30%; left:50%;
+                <button type="submit" class="button button1" id="submitButton" style="margin:0; position:absolute; top:30%; left:50%;
                         -ms-transform:translate(-50%, -50%); transform:translate(-50%, -50%);">{{ _('Spell Check') }}
                 </button>
 
@@ -129,6 +129,14 @@ HTML file that uses base template to create specific page for textbox editor
         if (window.history.replaceState) {
             window.history.replaceState( null, null, window.location.href );
         }
+
+        var input = document.getElementById("InputOutputDiv");
+
+        input.addEventListener("keyup", function(event){
+            if(event.keyCode === 13){
+                document.getElementById("submitButton").click();
+            }
+        });
 
         //Method that runs on form submission to get data from div and put into textarea to be sent to backend
         function getContent(){
