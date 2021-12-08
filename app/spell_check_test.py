@@ -45,7 +45,7 @@ class TestSpellCheckMethods(unittest.TestCase):
 
     def test_check_other_langs_irish(self):
         lang_dictionaries = {}
-        lang_dictionaries['Irish'] = loadDictionary("IrishCorpus/filtered_db_output.json")
+        lang_dictionaries['Irish'] = loadDictionary("IrishCorpus/final_irish_dictionary.json")
         input_list, word_list = parse_txt('Mar seo a deir an Tiarna')
         self.assertEqual(check_other_lang(input_list, word_list, lang_dictionaries['Irish']), [])
         input_list, word_list = parse_txt('Mrtre seo a deir an Tiarna')
