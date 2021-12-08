@@ -49,7 +49,7 @@ if args.i:
     db_dict = db_to_dict(db)
 
     out = open('db_init_output.json', "w", encoding='utf-8')
-    json_db = json.dumps(db_dict)#, ensure_ascii=False)
+    json_db = json.dumps(db_dict, ensure_ascii=False)
     out.write(json_db)
     out.close()
 
